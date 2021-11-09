@@ -174,6 +174,7 @@ priority."
 
 (defun kind-prefix-reset-cache ()
   "Remove all cached icons from `kind-prefix-mapping'."
+  (interactive)
   (cl-loop for item in kind-prefix-mapping
 	   do (plist-put (cddr item) :display-icon nil)))
 
