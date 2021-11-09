@@ -229,3 +229,4 @@ Only operates if no affixation function is already set."
 	 kind-prefix--orig-completion-function nil))
     (error "Cannot enable kind-prefix: no completion-in-region-function found")))
 
+(provide 'kind-prefix)
