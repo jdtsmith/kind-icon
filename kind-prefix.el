@@ -147,13 +147,13 @@ priority."
     (or (plist-get plist :display-icon)
 	(let* ((bg-rgb (color-name-to-rgb
 			(if kind-prefix-default-face
-			    (face-attribute kind-prefix-default-face :background)
+			    (face-attribute kind-prefix-default-face :background nil t)
 			  (frame-parameter nil 'background-color))))
 	       (col-face (plist-get plist :face))
 	       (col (if col-face
 			(face-attribute col-face :foreground)
 		      (if kind-prefix-default-face
-			  (face-attribute kind-prefix-default-face :foreground)
+			  (face-attribute kind-prefix-default-face :foreground nil t)
 			(frame-parameter nil 'foreground-color))))
 	       (bg-col (kind-prefix--rgb-blend
 			(color-name-to-rgb col) bg-rgb
@@ -164,8 +164,9 @@ priority."
 				     'display (apply #'svg-lib-icon icon nil
 						     :foreground col :background bg-col
 						     kind-prefix-icon-style))
-		       (propertize (cadr map) 'face
-				   `(:weight bold :foreground ,col :background ,bg-col)))))
+		       (propertize
+			(cadr map) 'face
+			`(:weight bold :foreground ,col :background ,bg-col)))))
 	  (plist-put plist :display-icon disp)
 	  disp))))
 
