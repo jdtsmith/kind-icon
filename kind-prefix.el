@@ -10,14 +10,16 @@
 
 ;;; Commentary:
 
-;; This package adds a prefix based on :company-kind for compatible
-;; completion UI's which utilize completion-in-region.  The "kind"
-;; prefix is typically used for differentiating variables, functions,
-;; etc. in completion results.  It works by creating and setting into
-;; `completion-extra-properties' a custom affixation-function.  This
-;; function creates and caches a short-text or icon-based "badge" for
-;; the kind of the candidate.  Icons are by default from the
-;; "material" library provided by svg-lib, which is required.
+;; kind-prefix-mode adds a prefix badge based on :company-kind for
+;; compatible completion UI's utilizing completion-in-region.  The
+;; "kind" prefix is typically used for differentiating variables,
+;; functions, etc. among completion results.  It works by creating and
+;; setting into `completion-extra-properties' a custom
+;; affixation-function.  This function creates, styles, and caches a
+;; short-text or icon-based "badge" representing the kind of the
+;; candidate.  Icons are by default loaded from the "material" library
+;; provided by svg-lib, which is required (unless only short-text
+;; badges are desired, see `kind-prefix-use-icons').
 
 ;; kind-prefix is free software: you can redistribute it
 ;; and/or modify it under the terms of the GNU General Public License
