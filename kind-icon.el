@@ -89,7 +89,18 @@ color string or a face from which we the :foreground
 face-property is taken. The background is automatically computed
 to lie between the background color and foreground (see
 `kind-icon-blend-frac')."
-  :type 'list)
+  :link '(url-link "https://materialdesignicons.com")
+  :type '(repeat 
+	  (list :tag "Mapping"
+		(symbol :tag "Kind")
+		(string :tag "Short-Text")
+		(plist :tag "Icon/Face options"
+		       :inline t
+		       :options
+		       ((:icon (string :tag "Icon Name"
+				       :format "%t: %v"
+				       :action kind-icon--preview))
+			(:face (face :tag "Face")))))))
 
 (defcustom kind-icon-blend-frac 0.12
   "Fractional blend between foreground and background colors.
@@ -113,6 +124,14 @@ background color."
   "Default style parameters for building SVG icons.
 See `svg-lib-style-compute-default'."
   :type 'plist)
+
+(defun kind-icon--preview (widget event)
+  (goto-char (field-end))
+  (let ((icon (buffer-substring (point) (field-end))))
+    (message "%S looks like: %s" icon
+	     (propertize "**" 'display
+			 (apply #'svg-lib-icon
+				icon nil kind-icon-default-style)))))
 
 (defsubst kind-icon--rgb-blend (rgb1 rgb2 frac)
   "Return a fractional blend between two colors RGB1 and RGB2.
