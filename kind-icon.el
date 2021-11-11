@@ -124,7 +124,7 @@ background color."
 		       :inline t
 		       :options
 		       ((:icon (string :tag "Icon Name"
-				       :format "%t: %v"
+				       :format "%[Preview%] %t: %v"
 				       :action kind-icon--preview))
 			(:face (face :tag "Face")))))))
 
