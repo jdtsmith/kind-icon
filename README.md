@@ -23,7 +23,11 @@ A few examples of `kind-icon` in action:
 
 ## Installation 
 
-Get it from melpa (TBD), which should install `svg-lib` as well if necessary.  Enable in any buffer with completion using `kind-icon-mode`.  E.g., to enable for the completion UI [corfu](https://github.com/minad/corfu), which has a kind-formatter configuration:
+Get it from melpa (TBD).  Note that icons support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with [corfu](https://github.com/minad/corfu).
+
+### Using kind-formatter:
+
+To enable for the completion UI [corfu](https://github.com/minad/corfu), which has a kind-formatter configuration:
 
 ```elisp
 (use-package kind-icon ;package availability TBD
@@ -33,6 +37,8 @@ Get it from melpa (TBD), which should install `svg-lib` as well if necessary.  E
   (kind-icon-default-face 'corfu-background)
   (corfu-kind-formatter #'kind-icon-formatted))
 ```
+
+### Wrapping completion-in-region
 
 The more generic approach of wrapping the `completion-in-region-function` would look like:
 
@@ -46,6 +52,8 @@ The more generic approach of wrapping the `completion-in-region-function` would 
    		    (kind-icon-enhance-completion
    		     completion-in-region-function)))))
 ```
+
+For whichever completion-ui you are using.  
 
 ## Configuration
 
