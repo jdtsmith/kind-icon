@@ -89,4 +89,10 @@ By default, `kind-icon` creates a blended background color that is a mix of a bi
 
 ### Icons 
 
-Check the [material icon library](https://materialdesignicons.com) for the SVG icons you can use.  All you need to "use" an icon is its name! Note that on first use, icons are auto-downloaded by `svg-lib`, so you'll need a network connection.  After that they are cached locally. 
+Check the [material icon library](https://materialdesignicons.com) for the icons you can use, more than 6,500 of them!  All you need to "use" an icon is its name.  The easiest approach is to `M-x customize-variable kind-icon-mapping`, find the kind you are interested in, and change its icon. Hit the `Preview` button and check the message buffer to confirm it's the icon you were after, and Apply your changes.
+
+Note that on first use, icons are auto-downloaded by `svg-lib`, so you'll need a network connection.  After that they are cached locally.
+
+### Old School: Text-based prefixes
+
+You can also use simple text-based prefixed instead of icons.  A "text" icon is either one or two characters (anything longer will be dropped).  The icons are quite lightweight so there shouldn't be much performance difference, but some may prefer a simpler look.  Simply set the `kind-icon-use-icons` variable to `nil` and you are good to go.
