@@ -153,10 +153,10 @@ otherwise defaulting to the frame background color."
 See `svg-lib-style-compute-default'."
   :type 'plist)
 
-(defun kind-icon--preview (_w _e)
-  (goto-char (field-end))
-  (let ((icon (buffer-substring (point) (field-end))))
-    (message "%S looks like: %s" icon
+(defun kind-icon--preview (widget _e)
+  (let* ((icon (widget-value widget)))
+    (message "%S [%s] looks like: %s" icon
+	     (pp-to-string (widget- widget))
 	     (propertize "**" 'display
 			 (apply #'svg-lib-icon
 				icon nil kind-icon-default-style)))))
