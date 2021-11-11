@@ -1,4 +1,4 @@
-# kind-icon
+# kind-icon — Rich icons for in-buffer completion
 This emacs package adds icon or text-based completion prefixes based on the `:company-kind` property many completion backends (such as lsp-mode) provide.  It works either as a "kind-formatter" function (e.g. for corfu) or by wrapping the completion function for other completion UI's which handle the Emacs 28+ `affixation-function` completion property. 
 
 ## Examples
