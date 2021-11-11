@@ -263,36 +263,25 @@ and its result used as the affixation suffix, first setting the
 			  suffix))))
 	      candidates)))
 
-(defvar-local kind-icon--orig-completion-function nil
-  "The prior completion-in-region-function we are wrapping.")
+(defun kind-icon-enhance-completion (completion-function)
+    "A wrapper for completion-in-region-functions.
+This wrapper sets a custom affixation-function which places an
+icon in the prefix slot. Use it like:
 
-(defun kind-icon--completion-in-region-function (start end table &optional pred)
-  "Set a custom affixation function for kind-icon.
-Only operates if no affixation function is already set."
-  (let* ((str (buffer-substring start (point)))
-	 (metadata (completion-metadata str table pred))
-	 (kind-func (kind-icon--metdata-get metadata "company-kind"))
-	 (ann-func (kind-icon--metdata-get metadata "annotation-function"))
-	 (aff-func (kind-icon--metdata-get metadata "affixation-function")))
-    (if (and kind-func (not aff-func)) ;; add a custom affixation function
-	(setq completion-extra-properties
-	      (plist-put completion-extra-properties :affixation-function
-			 (kind-icon--affixation-function kind-func ann-func)))))
-  (funcall kind-icon--orig-completion-function start end table pred))
-		  
-(define-minor-mode kind-icon-mode
-  "Minor mode enabling kind prefix by wrapping the completion-in-region-function."
-  :init-value nil
-  (if completion-in-region-function
-      (if kind-icon-mode
-	  (progn
-	    (kind-icon-reset-cache)
-	    (setq-local
-	     kind-icon--orig-completion-function completion-in-region-function
-	     completion-in-region-function #'kind-icon--completion-in-region-function))
-	(setq-local
-	 completion-in-region-function kind-icon--orig-completion-function
-	 kind-icon--orig-completion-function nil))
-    (error "Cannot enable kind-icon: no completion-in-region-function found")))
+  (setq completion-in-region-function 
+     (kind-icon-enhance-completion 
+       #'original-completion-in-region-function))"
+    (lambda (start end table &optional pred)
+      (let* ((str (buffer-substring start (point)))
+	     (metadata (completion-metadata str table pred))
+	     (kind-func (kind-icon--metdata-get metadata "company-kind"))
+	     (ann-func (kind-icon--metdata-get metadata "annotation-function"))
+	     (aff-func (kind-icon--metdata-get metadata "affixation-function")))
+	(when (and kind-func (not aff-func)) ;; add a custom affixation function
+	  (kind-icon-reset-cache)
+	  (setq completion-extra-properties
+		(plist-put completion-extra-properties :affixation-function
+			   (kind-icon--affixation-function kind-func ann-func)))))
+      (funcall completion-function start end table pred)))
 
 (provide 'kind-icon)
