@@ -23,7 +23,7 @@ A few examples of `kind-icon` in action:
 
 ## Installation 
 
-Get it from melpa (TBD).  Note that icons support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with [corfu](https://github.com/minad/corfu).
+Get it from your local package archive (TBD).  Note that icons support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with the excellent [corfu](https://github.com/minad/corfu) completion package (from the maker of vertico, consult, marginalia, and more). 
 
 ### Using kind-formatter:
 
@@ -104,4 +104,4 @@ You can also use simple text-based prefixed instead of icons.  A "text" icon is 
 ## Thanks
 
 - to @rougier for the excellent [svg-lib](https://github.com/rougier/svg-lib).  
-- to @minad, who developed corfu (among many others), came up with the `kind-formatter` concept, and contributed many great ideas.
+- to @minad, who developed [corfu](https://github.com/minad/corfu) (among many others), came up with the `kind-formatter` concept, and contributed many great ideas.
