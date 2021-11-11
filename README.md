@@ -63,7 +63,7 @@ The configuration defaults should work fine, but kind-icon can be customized to 
 
 `kind-icon` has a few customization variables that allows you to configure its appearance.
 
-**Key configurations:**
+**Important configurations:**
 
 - `kind-icon-use-icons`: If non-nil (the default), prefer icons for prefix badges.  Otherwise, use text labels.  Individual kind entries can also have their icons disabled by removing the `:icon` property in the mapping (see below). 
 
