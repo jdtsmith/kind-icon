@@ -93,7 +93,7 @@ Check the [material icon library](https://materialdesignicons.com) for the icons
 
 Note that on first use, icons are auto-downloaded by `svg-lib`, so you'll need a network connection.  After that they are cached locally.
 
-Any icons!
+And yes, you can use **any icons**!
 
   ![image](https://user-images.githubusercontent.com/93749/141231207-94d14bd8-0e85-4315-aa29-f6200b2729cc.png)
 
