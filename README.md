@@ -19,7 +19,7 @@ A few examples of `kind-icon` in action:
 
 - **Mix of text and icons:** 
 
-  ![image](https://user-images.githubusercontent.com/93749/141228094-8f3364b8-09d0-4e17-860d-221ea9de989c.png)
+  ![image](https://user-images.githubusercontent.com/93749/141231327-5b15a92f-87f6-4a52-aff4-d7e9229842a9.png)
 
 ## Installation 
 
@@ -53,7 +53,7 @@ The more generic approach of wrapping the `completion-in-region-function` would 
    		     completion-in-region-function)))))
 ```
 
-For whichever completion-ui you are using.  
+for whichever `completion-ui` you are using.  
 
 ## Configuration
 
@@ -92,6 +92,10 @@ By default, `kind-icon` creates a blended background color that is a mix of a bi
 Check the [material icon library](https://materialdesignicons.com) for the icons you can use, more than 6,500 of them!  All you need to "use" an icon is its name.  The easiest approach is to `M-x customize-variable kind-icon-mapping`, find the kind you are interested in, and change its icon. Hit the `Preview` button and check the message buffer to confirm it's the icon you were after, and Apply your changes.
 
 Note that on first use, icons are auto-downloaded by `svg-lib`, so you'll need a network connection.  After that they are cached locally.
+
+Any icons!
+
+  ![image](https://user-images.githubusercontent.com/93749/141231207-94d14bd8-0e85-4315-aa29-f6200b2729cc.png)
 
 ### Old School: Text-based prefixes
 
