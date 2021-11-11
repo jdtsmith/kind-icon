@@ -54,7 +54,6 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
-
 (defgroup kind-icon nil
   "Completion prefixes from :company-kind."
   :group 'convenience
@@ -284,4 +283,15 @@ icon in the prefix slot. Use it like:
 			   (kind-icon--affixation-function kind-func ann-func)))))
       (funcall completion-function start end table pred)))
 
+(defun kind-icon--guard-config (_s _n _o where)
+  "Dump the variable cache when the variable changes."
+  (if where
+      (with-current-buffer where
+	(kind-icon-reset-cache))
+    (kind-icon-reset-cache)))
+
+(add-variable-watcher 'kind-icon-mapping #'kind-icon--guard-config)
+(add-variable-watcher 'kind-icon-use-icons #'kind-icon--guard-config)
+(add-variable-watcher 'kind-icon-blend-background #'kind-icon--guard-config)
+(add-variable-watcher 'kind-icon-blend-frac #'kind-icon--guard-config)
 (provide 'kind-icon)

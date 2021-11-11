@@ -51,7 +51,7 @@ The configuration defaults should work fine, but kind-icon can be customized to 
 
 ### Variables
 
-`kind-icon` has a few customization variables that allows you to configure its appearance. Note that since the styled icons are cached, changes to the mapping, font size, or other variables in an initialized buffer should be followed by `M-x kind-icon-reset-cache` (or just restart Emacs).
+`kind-icon` has a few customization variables that allows you to configure its appearance.
 
 **Key configurations:**
 
