@@ -67,7 +67,7 @@ The configuration defaults should work fine, but kind-icon can be customized to 
 
 - `kind-icon-use-icons`: If non-nil (the default), prefer icons for prefix badges.  Otherwise, use text labels.  Individual kind entries can also have their icons disabled by removing the `:icon` property in the mapping (see below). 
 
-- `kind-icon-mapping`: This is the top level configuration mapping `:company-kind` "types" like `'variable` and `'function`.  Each item in this list has the format `(sym short-text :keyword value ...)` where `sym` is the kind (a symbol), and `short-text` is the abbreviated text to display (if icons are not used).  The rest of the list is a property list with optional keys `:icon` and `:face`.  The latter will be used to set the text foreground and (possibly) background colors on the badge.  The former specifies an icon to use, and is simply a string name from the free [material icon library](https://materialdesignicons.com) used by [svg-lib](https://github.com/rougier/svg-lib).  Try `M-x customize-variable kind-icon-mapping` for a nice interface including an icon Preview button.
+- `kind-icon-mapping`: This is the top level configuration mapping `:company-kind` "types" like `'variable` and `'function`.  Each item in this list has the format `(sym short-text :keyword value ...)` where `sym` is the kind (a symbol), and `short-text` is the abbreviated text to display (if icons are not used).  The rest of the list is a property list with optional keys `:icon` and `:face`.  The latter will be used to set the text foreground and (possibly) background colors on the badge.  The former specifies an icon to use, and is simply a string name from the free [material icon library](https://materialdesignicons.com) used by [svg-lib](https://github.com/rougier/svg-lib).  Try `M-x customize-variable kind-icon-mapping` for a nice interface including an icon Preview button.  Pro-tip: keep your code buffer open with completion popped-up alongside the customization buffer.  When you apply changes, they are immediately applied.  
 
 - `kind-icon-default-face`: A face from which the icon background color will be taken and blended with the `:face` foreground color in the mapping table to create a custom background color.  If not set, the frame default background color will be used for this purpose.  Similarly, the foreground color for this face, if set, will be used if a `:face` foreground is missing from the mapping. 
 
@@ -97,6 +97,11 @@ Any icons!
 
   ![image](https://user-images.githubusercontent.com/93749/141231207-94d14bd8-0e85-4315-aa29-f6200b2729cc.png)
 
-### Old School: Text-based prefixes
+### Old School: Text-based Icons!
 
 You can also use simple text-based prefixed instead of icons.  A "text" icon is either one or two characters (anything longer will be dropped).  The icons are quite lightweight so there shouldn't be much performance difference, but some may prefer a simpler look.  Simply set the `kind-icon-use-icons` variable to `nil` and you are good to go.
+
+## Thanks
+
+- to @rougier for the excellent [svg-lib](https://github.com/rougier/svg-lib).  
+- to @minad, who developed corfu (among many others), came up with the `kind-formatter` concept, and contributed many great ideas.
