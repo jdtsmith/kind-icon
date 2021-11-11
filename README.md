@@ -1,7 +1,23 @@
 # kind-icon
-Supplies a _kind_ icon or short-text prefix for emacs completion in the buffer.
-
 This emacs package adds icon or text-based completion prefixes based on the `:company-kind` property many completion backends (such as lsp-mode) provide.  It works either as a "kind-formatter" function (e.g. for corfu) or by wrapping the completion function for other completion UI's which handle the Emacs 28+ `affixation-function` completion property. 
+
+## Examples
+
+- **`kind-icon` with [corfu](https://github.com/minad/corfu) and [orderless](https://github.com/oantolin/orderless), from [lsp-mode](https://github.com/emacs-lsp/lsp-mode) :**
+
+  ![image](https://user-images.githubusercontent.com/93749/141227979-9f22cbb6-8029-42f1-86b4-f4cdd03636b2.png)
+  
+- **With text-based icons:**
+
+  ![image](https://user-images.githubusercontent.com/93749/141225205-9a718be8-f352-451f-892b-aaacae1eeaf6.png)
+
+- **Blended background color disabled:**
+
+  ![image](https://user-images.githubusercontent.com/93749/141227004-e4514961-245c-4aa0-888a-65c0a1b63757.png)
+
+- **Mix of text and icons:** 
+
+  ![image](https://user-images.githubusercontent.com/93749/141228094-8f3364b8-09d0-4e17-860d-221ea9de989c.png)
 
 ## Installation 
 
