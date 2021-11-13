@@ -86,15 +86,14 @@
     (module "{" :icon "file-code-outline" :face font-lock-preprocessor-face)
     (numeric "nu" :icon "numeric" :face font-lock-builtin-face)
     (operator "op" :icon "plus-minus" :face font-lock-comment-delimiter-face)
-    (parameter "pa" :icon "application-variable-outline" :face font-lock-builtin-face)
     (property "pr" :icon "application-parentheses-outline" :face font-lock-variable-name-face)
     (reference "rf" :icon "variable-box" :face font-lock-variable-name-face)
-    (ruler "r" :icon "ruler-square" :face shadow)
     (snippet "S" :icon "note-text-outline" :face font-lock-string-face)
     (string "s" :icon "sticker-text-outline" :face font-lock-string-face)
     (struct "%" :icon "code-braces" :face font-lock-variable-name-face)
     (text "tx" :icon "script-text-outline" :face shadow)
-    (typeparameter "tp" :icon "format-list-bulleted-type" :face font-lock-type-face)
+    (type-parameter "tp" :icon "format-list-bulleted-type" :face font-lock-type-face)
+    (unit "u" :icon "ruler-square" :face shadow)
     (value "v" :icon "plus-circle-outline" :face font-lock-builtin-face)
     (variable "va" :icon "variable" :face font-lock-variable-name-face)
     (t "." :icon "crosshairs-question" :face shadow))
@@ -159,8 +158,7 @@ See `svg-lib-style-compute-default'."
 
 (defun kind-icon--preview (widget _e)
   (let* ((icon (widget-value widget)))
-    (message "%S [%s] looks like: %s" icon
-	     (pp-to-string (widget- widget))
+    (message "%S looks like: %s" icon
 	     (propertize "**" 'display
 			 (apply #'svg-lib-icon
 				icon nil kind-icon-default-style)))))
@@ -288,7 +286,7 @@ icon in the prefix slot. Use it like:
       (funcall completion-function start end table pred)))
 
 (defun kind-icon--guard-config (_s _n _o where)
-  "Dump the variable cache when the variable changes."
+  "Dump the variable cache when the variables change."
   (if where
       (with-current-buffer where
 	(kind-icon-reset-cache))
