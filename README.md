@@ -91,9 +91,10 @@ By default, `kind-icon` creates a blended background color that is a mix of a bi
 
 Check the [material icon library](https://materialdesignicons.com) for the icons you can use, more than 6,500 of them!  All you need to "use" an icon is its name.  The easiest approach is to `M-x customize-variable kind-icon-mapping`, find the kind you are interested in, and change its icon. Hit the `Preview` button and check the message buffer to confirm it's the icon you were after, and Apply your changes.
 
-**Note that `svg-lib`, which `kind-icon` uses, downloads and caches icons in, by default in `.emacs.d/.cache/svg-lib/`.**  If no network connection is present, and the icon has not been cached on disk, the short-text is used as a backup. 
+**Note that `svg-lib`, which `kind-icon` uses, downloads and caches icons, by default in `.emacs.d/.cache/svg-lib/`.**  If no network connection is present, and the icon has not been cached on disk, the short-text is used as a backup. 
 
 And yes, you can use **any icons**!
+
  ![image](https://user-images.githubusercontent.com/93749/141231207-94d14bd8-0e85-4315-aa29-f6200b2729cc.png)
 
 ### Old School: Text-based Icons!
