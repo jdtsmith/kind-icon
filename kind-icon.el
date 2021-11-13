@@ -63,6 +63,7 @@
   "Whether to use icons for prefix display."
   :type 'boolean)
 
+(defvar svg-lib-icon)
 (unless (require 'svg-lib nil 'noerror)
   (setq kind-icon-use-icons nil))
 
