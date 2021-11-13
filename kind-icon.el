@@ -4,7 +4,7 @@
 
 ;; Author: J.D. Smith
 ;; Homepage: https://github.com/jdtsmith/kind-icon
-;; Package-Requires: ((emacs "27.1"))
+;; Package-Requires: ((emacs "27.1") svg-lib)
 ;; Package-Version: 0.1.0
 ;; Keywords: completion
 
