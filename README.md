@@ -56,9 +56,9 @@ The configuration defaults should work fine, but kind-icon can be customized to 
 
 ### Variables
 
-`kind-icon` has a few customization variables that allows you to configure its appearance.  The easiest way to edit them is `M-x customize-group kind-icon`, which automatically takes care of cleaning the cache.  If you change them directly from lisp during a session, call `M-x kind-icon-reset-cache` for the changes to take effect. 
+`kind-icon` has a few customization variables that allow you to configure its appearance.  The easiest way to edit them is `M-x customize-group kind-icon`, which automatically takes care of cleaning the cache.  If you change them directly from lisp during a session (e.g. with `setq`), call `M-x kind-icon-reset-cache` to reset the temporary `kind-icon` cache, so that the changes will take effect.
 
-**Important configurations:**
+#### Important configuration variables:
 
 - `kind-icon-use-icons`: If non-nil (the default), prefer icons for prefix badges.  Otherwise, use text labels.  Individual kind entries can also have their icons disabled by removing the `:icon` property in the mapping (see below).  If `svg-lib` is unable to download a named icon and it is not cached on disk, text labels for that kind will be used as a fallback. 
 
@@ -72,21 +72,21 @@ The configuration defaults should work fine, but kind-icon can be customized to 
 
 ### Colors
 
-If you don't like the default colors used to go along with the icons, you can customize the associated face, choose another, or build your own. You can also change how the background color is displayed. 
+If you don't like the default colors used to go along with the icons, you can customize the associated face, choose another pre-existing face, or substitute your own face. You can also change how the background color is displayed. 
 
-**Foreground color:**
+#### Foreground color
 
-Icon foreground colors are matched by default to the default colors in programming modes (variables, function names, etc.).  This gives consistency with in-buffer highlighting.  These colors are taken from the `:face` mapping's `:foreground` color.  If no `:face` is set, the foreground is taken from `kind-icon-default-face` foreground, or, as a backup the default frame foreground.
+Icon foreground colors are matched in the default mapping to the face colors used by font-lock in programming modes (variables, function names, etc.).  This gives consistency with in-buffer highlighting.  These colors are taken from the `:face` mapping's `:foreground` color.  If no `:face` is set, the foreground is taken from `kind-icon-default-face` foreground, or, as a backup, the default frame foreground.
 
-**Background color:**
+#### Background color
 
-By default, `kind-icon` creates a blended background color that is a mix of a bit of the foreground color and the background.  Note that if your completion UI uses a different background color from your normal buffer, you should configure the face it uses in `kind-icon-default-face`. If you turn off `kind-icon-blend-background`, `kind-icon` will use both the foreground _and_ background from the configured `:face` for each kind, allowing you to configure arbitrary colors.
+By default, `kind-icon` creates a _blended_ background color that is a mix of a bit of the foreground color and the normal completion background.  Note that if your completion UI uses a different background color from your normal buffer, you should configure the face it uses in `kind-icon-default-face`. If you turn off `kind-icon-blend-background`, `kind-icon` will use both the foreground _and_ (if set) background from the configured `:face` for each kind, allowing you to configure arbitrary colors.
 
 ### Icons 
 
 Check the [material icon library](https://materialdesignicons.com) for the icons you can use, more than 6,500 of them!  All you need to "use" an icon is its name.  The easiest approach is to `M-x customize-variable kind-icon-mapping`, find the kind you are interested in, and change its icon. Hit the `Preview` button and check the message buffer to confirm it's the icon you were after, and Apply your changes.
 
-**Note that `svg-lib`, which `kind-icon` uses, downloads and caches icons, by default in `.emacs.d/.cache/svg-lib/`.**  If no network connection is present, and the icon has not been cached on disk, the short-text is used as a backup. 
+**Note that `svg-lib`, which `kind-icon` uses, downloads and caches icons, by default in `.emacs.d/.cache/svg-lib/`.**  If no network connection is present, and the icon has not been cached on disk, the short-text is used as a backup.
 
 And yes, you can use **any icons**!
 
@@ -94,7 +94,7 @@ And yes, you can use **any icons**!
 
 ### Old School: Text-based Icons!
 
-You can also use simple text-based prefixed instead of icons.  A "text" icon is either one or two characters (anything longer will be trimmed).  The icons are quite lightweight so there shouldn't be much performance difference, but some may prefer a simpler look.  Simply set the `kind-icon-use-icons` variable to `nil` and you are good to go.  Note that if you are not connected to the network, even if you have enabled icons, any which are not cached will be replaced by their short text equivalents. 
+You can also use simple text-based prefixes instead of icons.  The icons are quite lightweight so there shouldn't be much performance difference, but some may prefer a simpler look.  A "text" icon is composed of either one or two characters (anything longer will be trimmed).  Simply set the `kind-icon-use-icons` variable to `nil` and (if desired) customize the "Short-Text" in the mapping.  Note that if you are not connected to the network, even if you have enabled icons, any icons which are not cached on disk will be replaced by their short text equivalents.
 
 ## Thanks
 
