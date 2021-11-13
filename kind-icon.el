@@ -178,12 +178,25 @@ See `svg-lib-style-compute-default'."
   :type 'plist
   :set #'kind-icon--set-default-clear-cache)
 
+(defun kind-icon--get-icon-safe (icon &optional col bg-col)
+  "Retrieve ICON (a string) from the material database.
+Uses svg-lib, guarding against network errors."
+  (condition-case err
+      (apply #'svg-lib-icon icon nil
+	     `(,@kind-icon-default-style
+	       ,@(if col `(:foreground ,col))
+	       ,@(if bg-col `(:background ,bg-col))))
+    ((error)
+     (warn "Error retrieving icon %s, falling back on short-text\n%s"
+	   icon (cdr err))
+     nil)))
+
 (defun kind-icon--preview (widget _e)
-  (let* ((icon (widget-value widget)))
-    (message "%S looks like: %s" icon
-	     (propertize "**" 'display
-			 (apply #'svg-lib-icon
-				icon nil kind-icon-default-style)))))
+  (let* ((icon-name (widget-value widget)))
+    (message "%S looks like: %s" icon-name
+	     (if-let ((icon (kind-icon--get-icon-safe icon-name)))
+		 (propertize "??" 'display icon)
+	       "??"))))
 
 (defsubst kind-icon--rgb-blend (rgb1 rgb2 frac)
   "Return a fractional blend between two colors RGB1 and RGB2.
@@ -240,21 +253,19 @@ background-color."
 	       (pad-right (propertize " " 'display `(space :width (,half))))
 	       (pad-left (propertize " " 'display `(space :width (,(- dfw half)))))
 	       (disp (if-let ((kind-icon-use-icons)
-			      (icon (plist-get plist :icon)))
+			      (icon-name (plist-get plist :icon))
+			      (icon (kind-icon--get-icon-safe icon-name col bg-col)))
 			 ;; icon: always 2x1, half-space on each side
-			 (propertize (concat
-				      pad-left
-				      (propertize "*" ; pretend 2 char-wide icon is only 1
-						  'display (apply #'svg-lib-icon icon nil
-								  :foreground col
-								  :background bg-col
-								  kind-icon-default-style))
-				      pad-right) 'face `(:background ,bg-col))
+			 (propertize ; pretend it's one char to allow padding
+			  (concat pad-left (propertize "*" 'display icon) pad-right)
+			  'face `(:background ,bg-col))
 		       ;; text, 1 or 2 chars, centered with full or half space on each side
 		       (let* ((txt (truncate-string-to-width (cadr map) 2))
 			      (len (length txt))
 			      (txt-disp (if (eq len 2)
-					    (concat pad-left (propertize "_" 'display txt) pad-right)
+					    (concat pad-left
+						    (propertize "_" 'display txt)
+						    pad-right)
 					  (concat " " txt " "))))
 			 (propertize txt-disp 'face
 				     `(:weight bold :foreground ,col :background ,bg-col))))))
