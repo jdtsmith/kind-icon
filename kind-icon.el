@@ -54,6 +54,19 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
+(defvar kind-icon--cache nil
+  "The cache of styled and padded label (text or icon).  
+An alist.")
+
+(defun kind-icon-reset-cache ()
+  "Remove all cached icons from `kind-icon-mapping'."
+  (interactive)
+  (setq kind-icon--cache nil))
+
+(defun kind-icon--set-default-clear-cache (&rest args)
+  (kind-icon-reset-cache)
+  (apply 'set-default args))
+
 (defgroup kind-icon nil
   "Completion prefixes from :company-kind."
   :group 'convenience
@@ -61,6 +74,7 @@
 
 (defcustom kind-icon-use-icons t
   "Whether to use icons for prefix display."
+  :set #'kind-icon--set-default-clear-cache
   :type 'boolean)
 
 (defvar svg-lib-icon)
@@ -119,6 +133,7 @@ the background color is taken from the :face's background in this
 map, or, if that is missing or unspecified, from the frame's
 background color."
   :link '(url-link "https://materialdesignicons.com")
+  :set #'kind-icon--set-default-clear-cache
   :type '(repeat 
 	  (list :tag "Mapping"
 		(symbol :tag "Kind")
@@ -131,15 +146,19 @@ background color."
 				       :action kind-icon--preview))
 			(:face (face :tag "Face")))))))
 
+
+
 (defcustom kind-icon-blend-background t
   "Whether to set a custom background blended from foreground."
-  :type 'boolean)
+  :type 'boolean
+  :set #'kind-icon--set-default-clear-cache)
 
 (defcustom kind-icon-blend-frac 0.12
   "Fractional blend between foreground and background colors.
 This is used for the prefix background, if
 kind-icon-blend-background is non-nil."
-  :type 'float)
+  :type 'float
+  :set #'kind-icon--set-default-clear-cache)
 
 (defcustom kind-icon-default-face nil
   "The default face to use for coloring.
@@ -149,13 +168,15 @@ the foreground color is taken from the foreground of this face,
 or (if nil) to the default frame foreground color.  The
 background color is also taken from this face, if provided,
 otherwise defaulting to the frame background color."
-  :type 'face)
+  :type 'face
+  :set #'kind-icon--set-default-clear-cache)
 
 (defcustom kind-icon-default-style
   '(:padding 0 :stroke 0 :margin 0 :radius 0 :height 1.0 :scale 1.0)
   "Default style parameters for building SVG icons.
 See `svg-lib-style-compute-default'."
-  :type 'plist)
+  :type 'plist
+  :set #'kind-icon--set-default-clear-cache)
 
 (defun kind-icon--preview (widget _e)
   (let* ((icon (widget-value widget)))
@@ -177,10 +198,6 @@ float FRAC."
   (or
    (cdr (assq (intern type-name) metadata))
    (plist-get completion-extra-properties (intern (format ":%s" type-name)))))
-
-(defvar kind-icon--cache nil
-  "The cache of styled and padded label (text or icon).  
-An alist.")
 
 (defun kind-icon-formatted (kind)
   "Return a formatted kind badge, either icon or text abbreviation.
@@ -245,11 +262,6 @@ background-color."
 	      (setf (alist-get kind kind-icon--cache) disp)
 	    (propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face))))))
 
-(defun kind-icon-reset-cache ()
-  "Remove all cached icons from `kind-icon-mapping'."
-  (interactive)
-  (setq kind-icon--cache nil))
-
 (defun kind-icon--affixation-function (kind-func &optional ann-func)
   "Create and return a custom kind-icon affixation function.
 The company-kind function should be passed in as KIND-FUNC and
@@ -292,15 +304,4 @@ icon in the prefix slot. Use it like:
 			   (kind-icon--affixation-function kind-func ann-func)))))
       (funcall completion-function start end table pred)))
 
-(defun kind-icon--guard-config (_s _n _o where)
-  "Dump the variable cache when the variables change."
-  (if where
-      (with-current-buffer where
-	(kind-icon-reset-cache))
-    (kind-icon-reset-cache)))
-
-(add-variable-watcher 'kind-icon-mapping #'kind-icon--guard-config)
-(add-variable-watcher 'kind-icon-use-icons #'kind-icon--guard-config)
-(add-variable-watcher 'kind-icon-blend-background #'kind-icon--guard-config)
-(add-variable-watcher 'kind-icon-blend-frac #'kind-icon--guard-config)
 (provide 'kind-icon)
