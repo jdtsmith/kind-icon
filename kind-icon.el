@@ -207,7 +207,7 @@ float FRAC."
 		      (+ (* a frac) (* b (- 1.0 frac))))
 		    rgb1 rgb2)))
 
-(defsubst kind-icon--metdata-get (metadata type-name)
+(defsubst kind-icon--metadata-get (metadata type-name)
   (or
    (cdr (assq (intern type-name) metadata))
    (plist-get completion-extra-properties (intern (format ":%s" type-name)))))
@@ -305,9 +305,9 @@ icon in the prefix slot. Use it like:
     (lambda (start end table &optional pred)
       (let* ((str (buffer-substring start (point)))
 	     (metadata (completion-metadata str table pred))
-	     (kind-func (kind-icon--metdata-get metadata "company-kind"))
-	     (ann-func (kind-icon--metdata-get metadata "annotation-function"))
-	     (aff-func (kind-icon--metdata-get metadata "affixation-function")))
+	     (kind-func (kind-icon--metadata-get metadata "company-kind"))
+	     (ann-func (kind-icon--metadata-get metadata "annotation-function"))
+	     (aff-func (kind-icon--metadata-get metadata "affixation-function")))
 	(when (and kind-func (not aff-func)) ;; add a custom affixation function
 	  (kind-icon-reset-cache)
 	  (setq completion-extra-properties
