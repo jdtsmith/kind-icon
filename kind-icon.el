@@ -177,29 +177,35 @@ float FRAC."
    (cdr (assq (intern type-name) metadata))
    (plist-get completion-extra-properties (intern (format ":%s" type-name)))))
 
+(defvar kind-icon--cache nil
+  "The cache of styled and padded label (text or icon).  
+An alist.")
+
 (defun kind-icon-formatted (kind)
   "Return a formatted kind badge, either icon or text abbreviation.
-Caches this badge as :display-icon in `kind-icon-mapping', and
-returns the cached value, if set.  If
-`kind-icon-blend-background' is non-nil, computes a blend between
-a nominal background color (from either the background property
-of `kind-icon-default-face', if set, or frame background color)
-and foreground.  For the foreground color, uses the :face
-mapping's :foreground color, the `kind-icon-default-face'
+Caches this badge in `kind-icon--cache', and returns the cached
+value, if set.  If no matching kind is specified, returns a `??'
+warning label.  For the foreground color of the badge, uses the
+:face mapping's :foreground color, the `kind-icon-default-face'
 foreground, or the default frame foreground, in that order of
-priority.  If `kind-icon-blend-background' is nil, the background
-is taken from the :face background, `kind-icon-default-face`, or
-frame background-color."
-  (when-let ((map (assq kind kind-icon-mapping))
-	     (plist (cddr map)))
-    (or (plist-get plist :display-icon)
+priority.  If `kind-icon-blend-background' is non-nil, computes a
+blend between a nominal background color (from either the
+background property of `kind-icon-default-face', if set, or the
+frame background color) and the foreground.  If
+`kind-icon-blend-background' is nil, the background is taken from
+the :face's background, `kind-icon-default-face', or the frame
+background-color."
+  (or (alist-get kind kind-icon--cache)
+      (when-let ((map (assq kind kind-icon-mapping))
+		 (plist (cddr map)))
 	(let* ((kind-face (plist-get plist :face))
 	       (col (if kind-face
 			(face-attribute kind-face :foreground nil t)
 		      (if kind-icon-default-face
 			  (face-attribute kind-icon-default-face :foreground nil t)
 			(frame-parameter nil 'foreground-color))))
-	       (kind-face-bg (and kind-face (face-attribute kind-face :background nil t)))
+	       (kind-face-bg (and kind-face
+				  (face-attribute kind-face :background nil t)))
 	       (default-bg (if kind-icon-default-face
 			       (face-attribute kind-icon-default-face :background nil t)
 			     (frame-parameter nil 'background-color)))
@@ -234,14 +240,14 @@ frame background-color."
 					  (concat " " txt " "))))
 			 (propertize txt-disp 'face
 				     `(:weight bold :foreground ,col :background ,bg-col))))))
-	  (plist-put plist :display-icon disp)
-	  disp))))
+	  (if disp
+	      (setf (alist-get kind kind-icon--cache) disp)
+	    (propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face))))))
 
 (defun kind-icon-reset-cache ()
   "Remove all cached icons from `kind-icon-mapping'."
   (interactive)
-  (cl-loop for item in kind-icon-mapping
-	   do (plist-put (cddr item) :display-icon nil)))
+  (setq kind-icon--cache nil))
 
 (defun kind-icon--affixation-function (kind-func &optional ann-func)
   "Create and return a custom kind-icon affixation function.
