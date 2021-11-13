@@ -99,7 +99,7 @@ And yes, you can use **any icons**!
 
 ### Old School: Text-based Icons!
 
-You can also use simple text-based prefixed instead of icons.  A "text" icon is either one or two characters (anything longer will be dropped).  The icons are quite lightweight so there shouldn't be much performance difference, but some may prefer a simpler look.  Simply set the `kind-icon-use-icons` variable to `nil` and you are good to go.
+You can also use simple text-based prefixed instead of icons.  A "text" icon is either one or two characters (anything longer will be trimmed).  The icons are quite lightweight so there shouldn't be much performance difference, but some may prefer a simpler look.  Simply set the `kind-icon-use-icons` variable to `nil` and you are good to go.  Note that if you are not connected to the network, even if you have enabled icons, any which are not cached will be replaced by their short text equivalents. 
 
 ## Thanks
 
