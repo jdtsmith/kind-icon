@@ -3,23 +3,18 @@ This emacs package adds icon or text-based completion prefixes based on the `:co
 
 ## Examples
 
-A few examples of `kind-icon` in action:
+A few examples of `kind-icon` in action with [lsp-mode](https://github.com/emacs-lsp/lsp-mode) providing completions:
 
-- **With [corfu](https://github.com/minad/corfu) and [orderless](https://github.com/oantolin/orderless), from [lsp-mode](https://github.com/emacs-lsp/lsp-mode) :**
+<div align="center">
 
-  ![image](https://user-images.githubusercontent.com/93749/141227979-9f22cbb6-8029-42f1-86b4-f4cdd03636b2.png)
-  
-- **Using text-based icons:**
+|   |   |
+| :---: | :---: |
+| **With [corfu](https://github.com/minad/corfu) and [orderless](https://github.com/oantolin/orderless):**  |   **Using text-based icons:** |
+| ![image](https://user-images.githubusercontent.com/93749/141227979-9f22cbb6-8029-42f1-86b4-f4cdd03636b2.png) | ![image](https://user-images.githubusercontent.com/93749/141225205-9a718be8-f352-451f-892b-aaacae1eeaf6.png) |
+| **Mix of text and icons:**  |   **Blended background color disabled:** |
+| ![image](https://user-images.githubusercontent.com/93749/141231327-5b15a92f-87f6-4a52-aff4-d7e9229842a9.png) | ![image](https://user-images.githubusercontent.com/93749/141227004-e4514961-245c-4aa0-888a-65c0a1b63757.png) |
+</div>
 
-  ![image](https://user-images.githubusercontent.com/93749/141225205-9a718be8-f352-451f-892b-aaacae1eeaf6.png)
-
-- **Mix of text and icons:** 
-
-  ![image](https://user-images.githubusercontent.com/93749/141231327-5b15a92f-87f6-4a52-aff4-d7e9229842a9.png)
-
-- **Blended background color disabled:**
-
-  ![image](https://user-images.githubusercontent.com/93749/141227004-e4514961-245c-4aa0-888a-65c0a1b63757.png)
   
 ## Installation 
 
