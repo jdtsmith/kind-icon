@@ -13,14 +13,14 @@ A few examples of `kind-icon` in action:
 
   ![image](https://user-images.githubusercontent.com/93749/141225205-9a718be8-f352-451f-892b-aaacae1eeaf6.png)
 
-- **Blended background color disabled:**
-
-  ![image](https://user-images.githubusercontent.com/93749/141227004-e4514961-245c-4aa0-888a-65c0a1b63757.png)
-
 - **Mix of text and icons:** 
 
   ![image](https://user-images.githubusercontent.com/93749/141231327-5b15a92f-87f6-4a52-aff4-d7e9229842a9.png)
 
+- **Blended background color disabled:**
+
+  ![image](https://user-images.githubusercontent.com/93749/141227004-e4514961-245c-4aa0-888a-65c0a1b63757.png)
+  
 ## Installation 
 
 Get it from your local package archive (TBD).  Note that icons support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with the excellent [corfu](https://github.com/minad/corfu) completion package (from the maker of vertico, consult, marginalia, and more). 
