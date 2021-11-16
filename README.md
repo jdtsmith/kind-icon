@@ -102,3 +102,4 @@ You can also use simple text-based prefixes instead of icons.  The icons are qui
 
 - to @rougier for the excellent [svg-lib](https://github.com/rougier/svg-lib).
 - to @minad, who developed [corfu](https://github.com/minad/corfu) (among many others) and contributed many great ideas to `kind-icon`.
+- to @dgutov, maintainer of [company](https://github.com/company-mode/company-mode), from which color-matching to font-lock faces was inspired. 
