@@ -15,19 +15,19 @@
 ;; typically used for differentiating completion candidates such as
 ;; variables, functions, etc.  It works in one of 2 ways:
 ;; 
-;;  1. For UI's with a "kind-formatter" option, simply set that
-;;     function to `kind-icon-formatted'.
+;;  1. For UI's with "margin-formatters" capability, simply add
+;;     `kind-icon-margin-formatter` to the margin formatter list.
 ;;
-;;  2. For UI's without a kind-formatter but which support "affixation
-;;     functions" (an Emacs 28 and later completion property), use
-;;     `kind-icon-enhance-completion' to wrap the normal
-;;     completion-in-region-function.  E.g. (in the completion mode's
-;;     hook):
+;;  2. For UI's without a margin-formatters but which support
+;;     "affixation functions" (an Emacs 28 and later completion
+;;     property), use `kind-icon-enhance-completion' to wrap the
+;;     normal completion-in-region-function.  E.g. (in the completion
+;;     mode's hook):
 ;;
 ;;     (setq completion-in-region-function
 ;;        (kind-icon-enhance-completion completion-in-region-function)
 ;;
-;;  3. If your UI supports neither a kind-formatter nor affixation
+;;  3. If your UI supports neither margin-formatters nor affixation
 ;;     functions, ask them to do so!
 ;;
 ;; Note that icon support requires svg-lib to be installed.
@@ -209,8 +209,8 @@ float FRAC."
 
 (defsubst kind-icon--metadata-get (metadata type-name)
   (or
-   (cdr (assq (intern type-name) metadata))
-   (plist-get completion-extra-properties (intern (format ":%s" type-name)))))
+   (plist-get completion-extra-properties (intern (format ":%s" type-name)))
+   (cdr (assq (intern type-name) metadata))))
 
 (defun kind-icon-formatted (kind)
   "Return a formatted kind badge, either icon or text abbreviation.
@@ -273,6 +273,20 @@ background-color."
 	      (setf (alist-get kind kind-icon--cache) disp)
 	    (propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face))))))
 
+(defconst kind-icon--unknown
+  (propertize "???" 'face '(:weight bold :background "red")))
+
+(defun kind-icon-margin-formatter (metadata)
+  "Return a margin-formatter function which produces kind icons.
+METADATA is the completion metadata supplied by the caller (see
+info node `(elisp)Programmed Completion').  To use, add this
+function to the relevant margin-formatters list."
+  (if-let ((kind-func (kind-icon--metadata-get metadata "company-kind")))
+      (lambda (cand)
+	(if-let ((kind (funcall kind-func cand)))
+	    (kind-icon-formatted kind)
+	  kind-icon--unknown))))
+      
 (defun kind-icon--affixation-function (kind-func &optional ann-func)
   "Create and return a custom kind-icon affixation function.
 The company-kind function should be passed in as KIND-FUNC and
@@ -290,7 +304,7 @@ and its result used as the affixation suffix, first setting the
 			   (badge (kind-icon-formatted kind)))
 		      (list cand badge suffix)
 		    (list cand
-			  (propertize "??" 'face '(:weight bold :background "red"))
+			  kind-icon--unknown
 			  suffix))))
 	      candidates)))
 
@@ -301,7 +315,7 @@ icon in the prefix slot. Use it like:
 
   (setq completion-in-region-function 
      (kind-icon-enhance-completion 
-       #'original-completion-in-region-function))"
+       completion-in-region-function))"
     (lambda (start end table &optional pred)
       (let* ((str (buffer-substring start (point)))
 	     (metadata (completion-metadata str table pred))

@@ -1,5 +1,5 @@
 # kind-icon — colorful icons for completion in Emacs
-This emacs package adds icon or text-based completion prefixes based on the `:company-kind` property many completion backends (such as lsp-mode) provide.  It works either as a "kind-formatter" function (for supporting UI's such as corfu) or by wrapping the completion function for other completion UI's which can handle the Emacs 28+ `affixation-function` completion property. 
+This emacs package adds icon or text-based completion prefixes based on the `:company-kind` property many completion backends (such as lsp-mode) provide.  It works either as a "margin-formatter" (for supporting UI's such as corfu) or by wrapping the completion function for other completion UI's which can handle the Emacs 28+ `affixation-function` completion property. 
 
 ## Examples
 
@@ -20,9 +20,9 @@ A few examples of `kind-icon` in action with [lsp-mode](https://github.com/emacs
 
 Get it from your local package archive (TBD).  Note that icons support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with the excellent [corfu](https://github.com/minad/corfu) completion package (from the maker of vertico, consult, marginalia, and more). 
 
-### Using kind-formatter:
+### Using margin-formatters:
 
-To enable for the completion UI [corfu](https://github.com/minad/corfu), which has a kind-formatter configuration:
+To enable for the completion UI [corfu](https://github.com/minad/corfu), which has margin-formatters capability:
 
 ```elisp
 (use-package kind-icon ;package availability TBD
@@ -30,7 +30,8 @@ To enable for the completion UI [corfu](https://github.com/minad/corfu), which h
   :after corfu
   :custom
   (kind-icon-default-face 'corfu-background)
-  (corfu-kind-formatter #'kind-icon-formatted))
+  :config
+  (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 ```
 
 ### Wrapping completion-in-region
@@ -98,5 +99,5 @@ You can also use simple text-based prefixes instead of icons.  The icons are qui
 
 ## Thanks
 
-- to @rougier for the excellent [svg-lib](https://github.com/rougier/svg-lib).  
-- to @minad, who developed [corfu](https://github.com/minad/corfu) (among many others), came up with the `kind-formatter` concept, and contributed many great ideas.
+- to @rougier for the excellent [svg-lib](https://github.com/rougier/svg-lib).
+- to @minad, who developed [corfu](https://github.com/minad/corfu) (among many others) and contributed many great ideas to `kind-icon`.
