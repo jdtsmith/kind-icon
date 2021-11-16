@@ -1,5 +1,5 @@
 # kind-icon — colorful icons for completion in Emacs
-This emacs package adds icon or text-based completion prefixes based on the `:company-kind` property many completion backends (such as lsp-mode) provide.  It works either as a "margin-formatter" (for supporting UI's such as corfu) or by wrapping the completion function for other completion UI's which can handle the Emacs 28+ `affixation-function` completion property. 
+This emacs package adds configurable icon or text-based completion prefixes based on the `:company-kind` property that many completion backends (such as lsp-mode and Emacs 28's elisp-mode) provide.  
 
 ## Examples
 
@@ -15,26 +15,27 @@ A few examples of `kind-icon` in action with [lsp-mode](https://github.com/emacs
 | ![image](https://user-images.githubusercontent.com/93749/141231327-5b15a92f-87f6-4a52-aff4-d7e9229842a9.png) | ![image](https://user-images.githubusercontent.com/93749/141227004-e4514961-245c-4aa0-888a-65c0a1b63757.png) |
 </div>
 
-  
 ## Installation 
 
-Get it from your local package archive (TBD).  Note that icons support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with the excellent [corfu](https://github.com/minad/corfu) completion package (from the maker of vertico, consult, marginalia, and more). 
+Get it from your local package archive (TBD).  Note that icon support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with the excellent [corfu](https://github.com/minad/corfu) completion front-end (from the maker of vertico, consult, marginalia, and more). 
 
-### Using margin-formatters:
+kind-icon works either as a "margin-formatter" (for supporting UI's such as corfu) or by wrapping the completion function, for other completion UI's which can handle the Emacs 28+ [`affixation-function`](https://git.savannah.gnu.org/cgit/emacs.git/tree/doc/lispref/minibuf.texi?id=d8e037eeaa7eef26349bc0fb3fa00e10a5c4b894#n1819) completion property.  
 
-To enable for the completion UI [corfu](https://github.com/minad/corfu), which has margin-formatters capability:
+### Using margin-formatters (preferred):
+
+To enable for completion UI's with margin-formatters capability such as [corfu](https://github.com/minad/corfu):
 
 ```elisp
 (use-package kind-icon ;package availability TBD
   :ensure t
   :after corfu
   :custom
-  (kind-icon-default-face 'corfu-background)
+  (kind-icon-default-face 'corfu-background) ; to compute blended background correctly
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 ```
 
-### Wrapping completion-in-region
+### Wrapping completion-in-region:
 
 The more generic approach of wrapping the `completion-in-region-function` would look like:
 
@@ -49,15 +50,15 @@ The more generic approach of wrapping the `completion-in-region-function` would 
    		     completion-in-region-function)))))
 ```
 
-for whichever `completion-ui` you are using.  Note that your completion UI must support the Emacs 28 `affixation-function' property. 
+for whichever `completion-ui` you are using.  Note that for this method to work, your completion UI must support the Emacs 28 `affixation-function` property. 
 
 ## Configuration
 
-The configuration defaults should work fine, but kind-icon can be customized to change the colors, preference of icons vs. short-text (or mixed) prefixes, and more. 
+The configuration defaults should work fine, but kind-icon can be customized to change the icons and colors, preference of icons vs. short-text (or mixed) prefixes, and more. 
 
 ### Variables
 
-`kind-icon` has a few customization variables that allow you to configure its appearance.  The easiest way to edit them is `M-x customize-group kind-icon`, which automatically takes care of cleaning the cache.  If you change them directly from lisp during a session (e.g. with `setq`), call `M-x kind-icon-reset-cache` to reset the temporary `kind-icon` cache, so that the changes will take effect.
+`kind-icon` has a few customization variables that allow you to configure its appearance.  The easiest way to edit them is `M-x customize-group kind-icon`, which automatically takes care of cleaning the cache upon changes.  If you change them directly from lisp during a session (e.g. with `setq`), call `M-x kind-icon-reset-cache` to reset the temporary `kind-icon` cache, so that the changes will take effect.
 
 #### Important configuration variables:
 
@@ -73,27 +74,27 @@ The configuration defaults should work fine, but kind-icon can be customized to 
 
 ### Colors
 
-If you don't like the default colors used to go along with the icons, you can customize the associated face, choose another pre-existing face, or substitute your own face. You can also change how the background color is displayed. 
+If you don't like the default colors of the icons, you can customize the associated face, choose another pre-existing face, or substitute your own face. You can also change how the background color is displayed. 
 
 #### Foreground color
 
-Icon foreground colors are matched in the default mapping to the face colors used by font-lock in programming modes (variables, function names, etc.).  This gives consistency with in-buffer highlighting.  These colors are taken from the `:face` mapping's `:foreground` color.  If no `:face` is set, the foreground is taken from `kind-icon-default-face` foreground, or, as a backup, the default frame foreground.
+Icon foreground colors are matched in the default mapping to the face colors used by font-lock in programming modes (variables, function names, etc.).  This gives consistency with in-buffer highlighting.  These colors are taken from the `:face` `:foreground` color in `kind-icon-mapping`.  If no `:face` is set for some kind, the foreground is taken from `kind-icon-default-face` foreground, or, as a backup, the default frame foreground.
 
 #### Background color
 
-By default, `kind-icon` creates a _blended_ background color that is a mix of a bit of the foreground color and the normal completion background.  Note that if your completion UI uses a different background color from your normal buffer, you should configure the face it uses in `kind-icon-default-face`. If you turn off `kind-icon-blend-background`, `kind-icon` will use both the foreground _and_ (if set) background from the configured `:face` for each kind, allowing you to configure arbitrary colors.
+By default, `kind-icon` creates a _blended_ background color that is a mix of a bit of the foreground color and the normal completion background (control the mix with `kind-icon-blend-frac`).  Note that if your completion UI uses a different background color from your normal buffer, you should configure the face it uses in `kind-icon-default-face`. If you disable `kind-icon-blend-background`, `kind-icon` will use both the foreground _and_ (if set) background from the configured `:face` for each kind, allowing you to configure arbitrary colors.
 
 ### Icons 
 
 Check the [material icon library](https://materialdesignicons.com) for the icons you can use, more than 6,500 of them!  All you need to "use" an icon is its name.  The easiest approach is to `M-x customize-variable kind-icon-mapping`, find the kind you are interested in, and change its icon. Hit the `Preview` button and check the message buffer to confirm it's the icon you were after, and Apply your changes.
 
-**Note that `svg-lib`, which `kind-icon` uses, downloads and caches icons, by default in `.emacs.d/.cache/svg-lib/`.**  If no network connection is present, and the icon has not been cached on disk, the short-text is used as a backup.
+**Note that `svg-lib`, which `kind-icon` uses, downloads and caches icons, by default in `.emacs.d/.cache/svg-lib/`.**  If no network connection is present, and the icon has not been cached on disk, the short-text is used as a backup for that session. 
 
 And yes, you can use **any icons**!
 
  ![image](https://user-images.githubusercontent.com/93749/141231207-94d14bd8-0e85-4315-aa29-f6200b2729cc.png)
 
-### Old School: Text-based Icons!
+### Old School: Text-based Icons
 
 You can also use simple text-based prefixes instead of icons.  The icons are quite lightweight so there shouldn't be much performance difference, but some may prefer a simpler look.  A "text" icon is composed of either one or two characters (anything longer will be trimmed).  Simply set the `kind-icon-use-icons` variable to `nil` and (if desired) customize the "Short-Text" in the mapping.  Note that if you are not connected to the network, even if you have enabled icons, any icons which are not cached on disk will be replaced by their short text equivalents.
 
