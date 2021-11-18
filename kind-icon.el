@@ -1,8 +1,8 @@
 ;;; kind-icon.el --- Completion kind icons  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2021  J.D. Smith
+;; Copyright (C) 2021  Free Software Foundation, Inc.
 
-;; Author: J.D. Smith
+;; Author: J.D. Smith <jdtsmith@gmail.com>
 ;; Homepage: https://github.com/jdtsmith/kind-icon
 ;; Package-Requires: ((emacs "27.1") svg-lib)
 ;; Package-Version: 0.1.0
@@ -54,6 +54,8 @@
 ;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
+(require 'svg-lib nil 'noerror)
+
 (defvar kind-icon--cache nil
   "The cache of styled and padded label (text or icon).  
 An alist.")
@@ -65,21 +67,19 @@ An alist.")
 
 (defun kind-icon--set-default-clear-cache (&rest args)
   (kind-icon-reset-cache)
-  (apply 'set-default args))
+  (apply #'set-default args))
 
 (defgroup kind-icon nil
   "Completion prefixes from :company-kind."
   :group 'convenience
   :prefix "kind-icon")
 
-(defcustom kind-icon-use-icons t
+(defcustom kind-icon-use-icons (featurep 'svg-lib)
   "Whether to use icons for prefix display."
   :set #'kind-icon--set-default-clear-cache
   :type 'boolean)
 
-(defvar svg-lib-icon)
-(unless (require 'svg-lib nil 'noerror)
-  (setq kind-icon-use-icons nil))
+(defvar svg-lib-icon)                  ;FIXME: This variable is not used here!?
 
 (defcustom kind-icon-mapping ;; adapted from company
   '((array "a" :icon "code-brackets" :face font-lock-type-face)
@@ -202,6 +202,8 @@ Uses svg-lib, guarding against network errors."
   "Return a fractional blend between two colors RGB1 and RGB2.
 Each is a 3 element list.  The fractional blend point is the
 float FRAC."
+  ;; FIXME: `color-rgb-to-hex' won't be (auto)loaded if `svg-lib' is
+  ;; not installed.
   (apply #'color-rgb-to-hex
 	 (cl-mapcar (lambda (a b)
 		      (+ (* a frac) (* b (- 1.0 frac))))
@@ -330,3 +332,4 @@ icon in the prefix slot. Use it like:
       (funcall completion-function start end table pred)))
 
 (provide 'kind-icon)
+;;; kind-icon.el ends here.
