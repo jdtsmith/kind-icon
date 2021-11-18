@@ -79,8 +79,6 @@ An alist.")
   :set #'kind-icon--set-default-clear-cache
   :type 'boolean)
 
-(defvar svg-lib-icon)                  ;FIXME: This variable is not used here!?
-
 (defcustom kind-icon-mapping ;; adapted from company
   '((array "a" :icon "code-brackets" :face font-lock-type-face)
     (boolean "b" :icon "circle-half-full" :face font-lock-builtin-face)
@@ -180,16 +178,17 @@ See `svg-lib-style-compute-default'."
 
 (defun kind-icon--get-icon-safe (icon &optional col bg-col)
   "Retrieve ICON (a string) from the material database.
-Uses svg-lib, guarding against network errors."
-  (condition-case err
-      (apply #'svg-lib-icon icon nil
-	     `(,@kind-icon-default-style
-	       ,@(if col `(:foreground ,col))
-	       ,@(if bg-col `(:background ,bg-col))))
-    ((error)
-     (warn "Error retrieving icon %s, falling back on short-text\n%s"
-	   icon (cdr err))
-     nil)))
+Uses svg-lib, guarding against non-availability or network errors."
+  (if (fboundp 'svg-lib-icon)
+      (condition-case err
+	  (apply #'svg-lib-icon icon nil
+		 `(,@kind-icon-default-style
+		   ,@(if col `(:foreground ,col))
+		   ,@(if bg-col `(:background ,bg-col))))
+	((error)
+	 (warn "Error retrieving icon %s, falling back on short-text\n%s"
+	       icon (cdr err))
+	 nil))))
 
 (defun kind-icon--preview (widget _e)
   (let* ((icon-name (widget-value widget)))
