@@ -5,8 +5,21 @@
 ;; Author: J.D. Smith <jdtsmith@gmail.com>
 ;; Homepage: https://github.com/jdtsmith/kind-icon
 ;; Package-Requires: ((emacs "27.1") svg-lib)
-;; Package-Version: 0.1.0
+;; Package-Version: 0.1.1
 ;; Keywords: completion
+
+;; kind-icon is free software: you can redistribute it
+;; and/or modify it under the terms of the GNU General Public License
+;; as published by the Free Software Foundation, either version 3 of
+;; the License, or (at your option) any later version.
+
+;; kind-icon is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+;; General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
 
@@ -39,19 +52,6 @@
 ;; only short-text badges are desired, see `kind-icon-use-icons').
 ;; Customize `kind-icon-mapping' to configure mapping between kind and
 ;; both short-text and icons.
-
-;; kind-icon is free software: you can redistribute it
-;; and/or modify it under the terms of the GNU General Public License
-;; as published by the Free Software Foundation, either version 3 of
-;; the License, or (at your option) any later version.
-
-;; kind-icon is distributed in the hope that it will be useful,
-;; but WITHOUT ANY WARRANTY; without even the implied warranty of
-;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-;; General Public License for more details.
-
-;; You should have received a copy of the GNU General Public License
-;; along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 ;;; Code:
 (require 'svg-lib nil 'noerror)
@@ -115,21 +115,21 @@ The format should be an alist of type:
 
    (KIND SHORT-TEXT PLIST)
 
-This information is used to build a prefix for kind KIND.  A
-prefix is a propertized string of either an icon or the
-SHORT-TEXT (two characters max), depending on the value of
+This information is used to build a prefix for kind KIND (a
+symbol).  A prefix is a propertized string of either an icon or
+the SHORT-TEXT (two characters max), depending on the value of
 variable `kind-icon-use-icons' and presence of :icon in the
-PLIST.  The PLIST is optional and includes keywords :icon and
-:face.  :icon is a name of an icon from the material
-collection (see `svg-lib'). :face is a face from which the
-:foreground face-property is used for the foreground. If
-`kind-icon-blend-background' is non-nil, the icon's background
-color is automatically computed to lie between the default-face
-or frame background color and the foreground color (see
-`kind-icon-blend-frac').  If `kind-icon-blend-background' is nil,
-the background color is taken from the :face's background in this
-map, or, if that is missing or unspecified, from the frame's
-background color."
+PLIST.  KIND and SHORT-TEXT are required.  The PLIST is optional
+and can include keywords :icon and :face.  :icon is a name of an
+icon from the material collection (see `svg-lib'). :face is a
+face from which the :foreground face-property is used for the
+foreground. If `kind-icon-blend-background' is non-nil, the
+icon's background color is automatically computed to lie between
+the default-face or frame background color and the foreground
+color (see `kind-icon-blend-frac').  If
+`kind-icon-blend-background' is nil, the background color is
+taken from the :face's background in this map, or, if that is
+missing or unspecified, from the frame's background color."
   :link '(url-link "https://materialdesignicons.com")
   :set #'kind-icon--set-default-clear-cache
   :type '(repeat 
@@ -143,8 +143,6 @@ background color."
 				       :format "%[Preview%] %t: %v"
 				       :action kind-icon--preview))
 			(:face (face :tag "Face")))))))
-
-
 
 (defcustom kind-icon-blend-background t
   "Whether to set a custom background blended from foreground."
