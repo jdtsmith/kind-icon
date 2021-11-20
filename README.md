@@ -17,7 +17,7 @@ A few examples of `kind-icon` in action with [lsp-mode](https://github.com/emacs
 
 ## Installation 
 
-Get it from your local package archive (TBD).  Note that icon support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with the excellent [corfu](https://github.com/minad/corfu) completion front-end (from the maker of vertico, consult, marginalia, and more). 
+Get it from ELPA (e.g. `M-x package-install RET kind-icon RET`).  Note that icon support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with the excellent [corfu](https://github.com/minad/corfu) completion front-end (from the maker of vertico, consult, marginalia, and more). 
 
 kind-icon works either as a "margin-formatter" (for supporting UI's such as corfu) or by wrapping the completion function, for other completion UI's which can handle the Emacs 28+ [`affixation-function`](https://git.savannah.gnu.org/cgit/emacs.git/tree/doc/lispref/minibuf.texi?id=d8e037eeaa7eef26349bc0fb3fa00e10a5c4b894#n1819) completion property.  
 
@@ -26,11 +26,11 @@ kind-icon works either as a "margin-formatter" (for supporting UI's such as corf
 To enable for completion UI's with margin-formatters capability such as [corfu](https://github.com/minad/corfu):
 
 ```elisp
-(use-package kind-icon ;package availability TBD
+(use-package kind-icon
   :ensure t
   :after corfu
   :custom
-  (kind-icon-default-face 'corfu-background) ; to compute blended background correctly
+  (kind-icon-default-face 'corfu-background) ; to compute blended backgrounds correctly
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 ```
