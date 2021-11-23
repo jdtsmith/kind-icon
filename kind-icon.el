@@ -226,51 +226,52 @@ frame background color) and the foreground.  If
 the :face's background, `kind-icon-default-face', or the frame
 background-color."
   (or (alist-get kind kind-icon--cache)
-      (when-let ((map (assq kind kind-icon-mapping))
+      (if-let ((map (assq kind kind-icon-mapping))
 		 (plist (cddr map)))
-	(let* ((kind-face (plist-get plist :face))
-	       (col (if kind-face
-			(face-attribute kind-face :foreground nil t)
-		      (if kind-icon-default-face
-			  (face-attribute kind-icon-default-face :foreground nil t)
-			(frame-parameter nil 'foreground-color))))
-	       (kind-face-bg (and kind-face
-				  (face-attribute kind-face :background nil t)))
-	       (default-bg (if kind-icon-default-face
-			       (face-attribute kind-icon-default-face :background nil t)
-			     (frame-parameter nil 'background-color)))
-	       (bg-col (if kind-icon-blend-background
-			   (kind-icon--rgb-blend
-			    (color-name-to-rgb col) 
-			    (color-name-to-rgb default-bg)
-			    kind-icon-blend-frac)
-			 (if (and kind-face-bg (not (eq kind-face-bg 'unspecified)))
-			     kind-face-bg
-			   default-bg)))
-	       (dfw (default-font-width))
-	       (half (/ dfw 2))
-	       (pad-right (propertize " " 'display `(space :width (,half))))
-	       (pad-left (propertize " " 'display `(space :width (,(- dfw half)))))
-	       (disp (if-let ((kind-icon-use-icons)
-			      (icon-name (plist-get plist :icon))
-			      (icon (kind-icon--get-icon-safe icon-name col bg-col)))
-			 ;; icon: always 2x1, half-space on each side
-			 (propertize ; pretend it's one char to allow padding
-			  (concat pad-left (propertize "*" 'display icon) pad-right)
-			  'face `(:background ,bg-col))
-		       ;; text, 1 or 2 chars, centered with full or half space on each side
-		       (let* ((txt (truncate-string-to-width (cadr map) 2))
-			      (len (length txt))
-			      (txt-disp (if (eq len 2)
-					    (concat pad-left
-						    (propertize "_" 'display txt)
-						    pad-right)
-					  (concat " " txt " "))))
-			 (propertize txt-disp 'face
-				     `(:weight bold :foreground ,col :background ,bg-col))))))
-	  (if disp
-	      (setf (alist-get kind kind-icon--cache) disp)
-	    (propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face))))))
+	  (let* ((kind-face (plist-get plist :face))
+		 (col (if kind-face
+			  (face-attribute kind-face :foreground nil t)
+			(if kind-icon-default-face
+			    (face-attribute kind-icon-default-face :foreground nil t)
+			  (frame-parameter nil 'foreground-color))))
+		 (kind-face-bg (and kind-face
+				    (face-attribute kind-face :background nil t)))
+		 (default-bg (if kind-icon-default-face
+				 (face-attribute kind-icon-default-face :background nil t)
+			       (frame-parameter nil 'background-color)))
+		 (bg-col (if kind-icon-blend-background
+			     (kind-icon--rgb-blend
+			      (color-name-to-rgb col) 
+			      (color-name-to-rgb default-bg)
+			      kind-icon-blend-frac)
+			   (if (and kind-face-bg (not (eq kind-face-bg 'unspecified)))
+			       kind-face-bg
+			     default-bg)))
+		 (dfw (default-font-width))
+		 (half (/ dfw 2))
+		 (pad-right (propertize " " 'display `(space :width (,half))))
+		 (pad-left (propertize " " 'display `(space :width (,(- dfw half)))))
+		 (disp (if-let ((kind-icon-use-icons)
+				(icon-name (plist-get plist :icon))
+				(icon (kind-icon--get-icon-safe icon-name col bg-col)))
+			   ;; icon: always 2x1, half-space on each side
+			   (propertize ; pretend it's one char to allow padding
+			    (concat pad-left (propertize "*" 'display icon) pad-right)
+			    'face `(:background ,bg-col))
+			 ;; text, 1 or 2 chars, centered with full or half space on each side
+			 (let* ((txt (truncate-string-to-width (cadr map) 2))
+				(len (length txt))
+				(txt-disp (if (eq len 2)
+					      (concat pad-left
+						      (propertize "_" 'display txt)
+						      pad-right)
+					    (concat " " txt " "))))
+			   (propertize txt-disp 'face
+				       `(:weight bold :foreground ,col :background ,bg-col))))))
+	    (if disp
+		(setf (alist-get kind kind-icon--cache) disp)
+	      (propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face)))
+	kind-icon--unknown)))
 
 (defconst kind-icon--unknown
   (propertize "???" 'face '(:weight bold :background "red")))
