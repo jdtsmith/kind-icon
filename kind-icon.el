@@ -275,6 +275,7 @@ background-color."
 
 (defconst kind-icon--unknown
   (propertize "???" 'face '(:weight bold :background "red")))
+(defconst kind-icon--blank "   ")
 
 (defun kind-icon-margin-formatter (metadata)
   "Return a margin-formatter function which produces kind icons.
@@ -285,8 +286,8 @@ function to the relevant margin-formatters list."
       (lambda (cand)
 	(if-let ((kind (funcall kind-func cand)))
 	    (kind-icon-formatted kind)
-	  kind-icon--unknown))))
-      
+	  kind-icon--blank))))
+
 (defun kind-icon--affixation-function (kind-func &optional ann-func)
   "Create and return a custom kind-icon affixation function.
 The company-kind function should be passed in as KIND-FUNC and
