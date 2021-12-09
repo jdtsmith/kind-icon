@@ -5,7 +5,7 @@
 ;; Author: J.D. Smith <jdtsmith@gmail.com>
 ;; Homepage: https://github.com/jdtsmith/kind-icon
 ;; Package-Requires: ((emacs "27.1") svg-lib)
-;; Package-Version: 0.1.1
+;; Package-Version: 0.1.3
 ;; Keywords: completion
 
 ;; kind-icon is free software: you can redistribute it
