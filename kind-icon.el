@@ -5,7 +5,7 @@
 ;; Author: J.D. Smith <jdtsmith@gmail.com>
 ;; Homepage: https://github.com/jdtsmith/kind-icon
 ;; Package-Requires: ((emacs "27.1") svg-lib)
-;; Package-Version: 0.1.3
+;; Package-Version: 0.1.4
 ;; Keywords: completion
 
 ;; kind-icon is free software: you can redistribute it
@@ -54,6 +54,9 @@
 ;; both short-text and icons.
 
 ;;; Code:
+
+(eval-when-compile
+  (require 'subr-x))
 (require 'svg-lib nil 'noerror)
 
 (defvar kind-icon--cache nil
@@ -229,7 +232,7 @@ the :face's background, `kind-icon-default-face', or the frame
 background-color."
   (or (alist-get kind kind-icon--cache)
       (if-let ((map (assq kind kind-icon-mapping))
-		 (plist (cddr map)))
+	       (plist (cddr map)))
 	  (let* ((kind-face (plist-get plist :face))
 		 (col (if kind-face
 			  (face-attribute kind-face :foreground nil t)
@@ -243,7 +246,7 @@ background-color."
 			       (frame-parameter nil 'background-color)))
 		 (bg-col (if kind-icon-blend-background
 			     (kind-icon--rgb-blend
-			      (color-name-to-rgb col) 
+			      (color-name-to-rgb col)
 			      (color-name-to-rgb default-bg)
 			      kind-icon-blend-frac)
 			   (if (and kind-face-bg (not (eq kind-face-bg 'unspecified)))
