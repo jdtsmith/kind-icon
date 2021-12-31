@@ -3,9 +3,9 @@
 ;; Copyright (C) 2021  Free Software Foundation, Inc.
 
 ;; Author: J.D. Smith <jdtsmith@gmail.com>
-;; Homepage: https://github.com/jdtsmith/kind-icon
+;; URL: https://github.com/jdtsmith/kind-icon
 ;; Package-Requires: ((emacs "27.1") svg-lib)
-;; Package-Version: 0.1.4
+;; Version: 0.1.5
 ;; Keywords: completion
 
 ;; kind-icon is free software: you can redistribute it
