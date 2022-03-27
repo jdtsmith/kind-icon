@@ -102,6 +102,19 @@ And yes, you can use **any icons**!
 
 You can also use simple text-based prefixes instead of icons.  The icons are quite lightweight so there shouldn't be much performance difference, but some may prefer a simpler look.  A "text" icon is composed of either one or two characters (anything longer will be trimmed).  Simply set the `kind-icon-use-icons` variable to `nil` and (if desired) customize the "Short-Text" in the mapping.  Note that if you are not connected to the network, even if you have enabled icons, any icons which are not cached on disk will be replaced by their short text equivalents.
 
+### Debugging Tips
+
+If you get an error mentioning `corfu--post-command`, and notice that you don't get a backtrace even after invoking `toggle-debug-on-error`, this is because backtraces are inhibited during post-command hooks.  To re-enable them, evaluate the following (e.g. in your `*scratch*` buffer):
+
+
+```elisp
+(advice-add 'corfu--post-command :around
+	    (lambda (func)
+	      (condition-case err
+		  (funcall func)
+		((debug error) (signal (car err) (cdr err))))))
+```
+
 ## Thanks
 
 - to @rougier for the excellent [svg-lib](https://github.com/rougier/svg-lib).
