@@ -215,6 +215,9 @@ float FRAC."
    (plist-get completion-extra-properties (intern (format ":%s" type-name)))
    (cdr (assq (intern type-name) metadata))))
 
+(defconst kind-icon--unknown
+  (propertize "???" 'face '(:weight bold :background "red")))
+
 (defun kind-icon-formatted (kind)
   "Return a formatted kind badge, either icon or text abbreviation.
 Caches this badge in `kind-icon--cache', and returns the cached
@@ -276,9 +279,6 @@ background-color."
 		(setf (alist-get kind kind-icon--cache) disp)
 	      (propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face)))
 	kind-icon--unknown)))
-
-(defconst kind-icon--unknown
-  (propertize "???" 'face '(:weight bold :background "red")))
 
 (defun kind-icon-margin-formatter (metadata)
   "Return a margin-formatter function which produces kind icons.
