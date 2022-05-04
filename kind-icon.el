@@ -280,6 +280,7 @@ background-color."
 	      (propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face)))
 	kind-icon--unknown)))
 
+;;;###autoload
 (defun kind-icon-margin-formatter (metadata)
   "Return a margin-formatter function which produces kind icons.
 METADATA is the completion metadata supplied by the caller (see
@@ -312,6 +313,7 @@ and its result used as the affixation suffix, first setting the
 			  suffix))))
 	      candidates)))
 
+;;;###autoload
 (defun kind-icon-enhance-completion (completion-function)
     "A wrapper for completion-in-region-functions.
 This wrapper sets a custom affixation-function which places an
