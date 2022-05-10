@@ -1,5 +1,5 @@
 # kind-icon — colorful icons for completion in Emacs
-This emacs package adds configurable icon or text-based completion prefixes based on the `:company-kind` property that many completion backends (such as lsp-mode and Emacs 28's elisp-mode) provide.  
+This emacs package adds configurable icon or text-based completion prefixes based on the `:company-kind` property that many completion backends (such as lsp-mode and Emacs 28's elisp-mode) provide.
 
 ## Examples
 
@@ -17,9 +17,9 @@ A few examples of `kind-icon` in action with [lsp-mode](https://github.com/emacs
 
 ## Installation 
 
-Get it from ELPA (e.g. `M-x package-install RET kind-icon RET`).  Note that icon support requires [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with the excellent [corfu](https://github.com/minad/corfu) completion front-end (from the maker of vertico, consult, marginalia, and more). 
+Get it from ELPA (e.g. `M-x package-install RET kind-icon RET`).  Note that icon support requires the small library [svg-lib](https://github.com/rougier/svg-lib).  At present `kind-icon` has been tested extensively with the excellent [corfu](https://github.com/minad/corfu) in-buffer completion front-end (from the maker of vertico, consult, marginalia, and more). 
 
-kind-icon works either as a "margin-formatter" (for supporting UI's such as corfu) or by wrapping the completion function, for other completion UI's which can handle the Emacs 28+ [`affixation-function`](https://git.savannah.gnu.org/cgit/emacs.git/tree/doc/lispref/minibuf.texi?id=d8e037eeaa7eef26349bc0fb3fa00e10a5c4b894#n1819) completion property.  
+`kind-icon` works either as a "margin-formatter" (for supporting UI's such as corfu) or by wrapping the completion function, for other completion UI's which can handle the Emacs 28+ [`affixation-function`](https://git.savannah.gnu.org/cgit/emacs.git/tree/doc/lispref/minibuf.texi?id=d8e037eeaa7eef26349bc0fb3fa00e10a5c4b894#n1819) completion property.  
 
 ### Using margin-formatters (preferred):
 
@@ -54,7 +54,7 @@ for whichever `completion-ui` you are using.  Note that for this method to work,
 
 ## Configuration
 
-The configuration defaults should work fine, but kind-icon can be customized to change the icons and colors, preference of icons vs. short-text (or mixed) prefixes, and more. 
+The configuration defaults should work fine, but `kind-icon` can be customized to change the icons and colors, preference of icons vs. short-text (or mixed) prefixes, and more. 
 
 ### Variables
 
@@ -124,6 +124,14 @@ If you get an error mentioning `corfu--post-command`, and notice that you don't 
 		  (funcall func)
 		((debug error) (signal (car err) (cdr err))))))
 ```
+
+## Related Packages
+
+A small set of packages related to `kind-icon`:
+
+- [company-mode](https://github.com/company-mode/company-mode) is the all-inclusive completion system, and includes built-in support for icons based on the Microsoft VSCode set.
+- [all-the-icons](https://github.com/iyefrat/all-the-icons.el) is font-based icon library which can be used to enrich dired, neotree, the mode line and others with icons.
+- [all-the-icons-completion](https://github.com/iyefrat/all-the-icons-completion/) builds on `all-the-icons` to enrich minibuffer-based completion, including support for the excellent [marginalia](https://github.com/minad/marginalia) annotator. 
 
 ## Thanks
 
