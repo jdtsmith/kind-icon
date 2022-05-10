@@ -104,7 +104,13 @@ You can also use simple text-based prefixes instead of icons.  The icons are qui
 
 ### Previewing
 
-Use `M-x kind-icon-preview-all` to reset and preview all icons (text and SVG icons both) in a view buffer.  This also has the effect of pre-downloading all icons, courtesy svg-lib.
+Use `M-x kind-icon-preview-all` to reset and preview all icons (text and SVG icons both) in a view buffer.  This also has the effect of pre-downloading all icons, courtesy svg-lib. Current defaults:
+
+<div align="center">
+
+  ![image](https://user-images.githubusercontent.com/93749/167690072-d8822ada-62b8-4b38-b8ea-987d83b38951.png)
+
+</div>
 
 ### Debugging Tips
 
