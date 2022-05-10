@@ -218,6 +218,27 @@ float FRAC."
 (defconst kind-icon--unknown
   (propertize "???" 'face '(:weight bold :background "red")))
 
+(defun kind-icon-preview-all ()
+  "Preview all kind icons.
+In the process, svg-lib also downloads and caches them."
+  (interactive)
+  (with-current-buffer (get-buffer-create "*kind-icon-preview*")
+    (font-lock-mode 0)
+    (view-buffer-other-window (current-buffer))
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (insert "kind-icon badges\n\ntxt icn\tkind\n")
+      (mapc (lambda (k)
+	      (apply 'insert
+		     `(,(mapconcat
+			 (lambda (v)
+			   (kind-icon-reset-cache)
+			   (let ((kind-icon-use-icons v))
+			     (kind-icon-formatted k)))
+			 '(nil t) " ")
+		       "\t" ,(symbol-name k) "\n")))
+	    (mapcar 'car kind-icon-mapping)))))
+
 (defun kind-icon-formatted (kind)
   "Return a formatted kind badge, either icon or text abbreviation.
 Caches this badge in `kind-icon--cache', and returns the cached
