@@ -60,14 +60,14 @@
 (require 'svg-lib nil 'noerror)
 (require 'color)
 
-(defvar kind-icon--cache nil
+(defvar kind-icon--cache [nil nil]
   "The cache of styled and padded label (text or icon).  
-An alist.")
+An vector of two alist for non-terminal and terminal.")
 
 (defun kind-icon-reset-cache ()
   "Remove all cached icons from `kind-icon-mapping'."
   (interactive)
-  (setq kind-icon--cache nil))
+  (setq kind-icon--cache (make-vector 2 nil)))
 
 (defun kind-icon--set-default-clear-cache (&rest args)
   (kind-icon-reset-cache)
@@ -254,59 +254,61 @@ frame background color) and the foreground.  If
 `kind-icon-blend-background' is nil, the background is taken from
 the :face's background, `kind-icon-default-face', or the frame
 background-color."
-  (or (alist-get kind kind-icon--cache)
-      (if-let ((map (assq kind kind-icon-mapping))
-	       (plist (cddr map)))
-	  (let* ((kind-face (plist-get plist :face))
-		 (col (if kind-face
-			  (face-attribute kind-face :foreground nil t)
-			(if kind-icon-default-face
-			    (face-attribute kind-icon-default-face :foreground nil t)
-			  (frame-parameter nil 'foreground-color))))
-		 (kind-face-bg (and kind-face
-				    (face-attribute kind-face :background nil t)))
-		 (default-bg (if kind-icon-default-face
-				 (face-attribute kind-icon-default-face :background nil t)
-			       (frame-parameter nil 'background-color)))
-		 (bg-col (if kind-icon-blend-background
-			     (kind-icon--rgb-blend
-			      (color-name-to-rgb col)
-			      (color-name-to-rgb default-bg)
-			      kind-icon-blend-frac)
-			   (if (and kind-face-bg (not (eq kind-face-bg 'unspecified)))
-			       kind-face-bg
-			     default-bg)))
-		 (dfw (default-font-width))
-		 (terminal (eq dfw 1))
-		 (half (/ dfw 2))
-		 (face-spec `(:weight bold :foreground ,col :background ,bg-col))
-		 (pad-right (propertize " " 'display `(space :width (,half))
-					'face face-spec))
-		 (pad-left (propertize " " 'display `(space :width (,(- dfw half)))
-				       'face face-spec))
-		 (disp (if-let ((kind-icon-use-icons)
-				(icon-name (plist-get plist :icon))
-				(icon (kind-icon--get-icon-safe icon-name col bg-col)))
-			   ;; icon: always 2x1, half-space on each side
-			   (propertize ; pretend it's one char to allow padding
-			    (concat pad-left
-				    (propertize "*" 'display icon 'face `(:background ,bg-col))
-				    pad-right))
-			 ;; text, 1 or 2 chars, centered with full or half space on each side
-			 (let* ((txt (truncate-string-to-width (cadr map) 2))
-				(len (length txt)))
-			   (if (eq len 2)
-			       (if terminal
-				   (propertize (concat txt " ") 'face face-spec)
-				 (concat pad-left
-					 (propertize "_" 'display
-						     (propertize txt 'face face-spec))
-					 pad-right))
-			     (propertize (concat " " txt " ") 'face face-spec))))))
-	    (if disp
-		(setf (alist-get kind kind-icon--cache) disp)
-	      (propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face)))
-	kind-icon--unknown)))
+  (let* ((dfw (default-font-width))
+	 (terminal (eq dfw 1))
+	 (slot (if terminal 1 0)))
+    (or (alist-get kind (aref kind-icon--cache slot))
+	(if-let ((map (assq kind kind-icon-mapping))
+		 (plist (cddr map)))
+	    (let* ((kind-face (plist-get plist :face))
+		   (col (if kind-face
+			    (face-attribute kind-face :foreground nil t)
+			  (if kind-icon-default-face
+			      (face-attribute kind-icon-default-face :foreground nil t)
+			    (frame-parameter nil 'foreground-color))))
+		   (kind-face-bg (and kind-face
+				      (face-attribute kind-face :background nil t)))
+		   (default-bg (if kind-icon-default-face
+				   (face-attribute kind-icon-default-face :background nil t)
+				 (frame-parameter nil 'background-color)))
+		   (bg-col (if kind-icon-blend-background
+			       (kind-icon--rgb-blend
+				(color-name-to-rgb col)
+				(color-name-to-rgb default-bg)
+				kind-icon-blend-frac)
+			     (if (and kind-face-bg (not (eq kind-face-bg 'unspecified)))
+				 kind-face-bg
+			       default-bg)))
+		   (half (/ dfw 2))
+		   (face-spec `(:weight bold :foreground ,col :background ,bg-col))
+		   (pad-right (propertize " " 'display `(space :width (,half))
+					  'face face-spec))
+		   (pad-left (propertize " " 'display `(space :width (,(- dfw half)))
+					 'face face-spec))
+		   (disp (if-let ((kind-icon-use-icons)
+				  ((not terminal))
+				  (icon-name (plist-get plist :icon))
+				  (icon (kind-icon--get-icon-safe icon-name col bg-col)))
+			     ;; icon: always 2x1, half-space on each side
+			     (propertize ; pretend it's one char to allow padding
+			      (concat pad-left
+				      (propertize "*" 'display icon 'face `(:background ,bg-col))
+				      pad-right))
+			   ;; text, 1 or 2 chars, centered with full or half space on each side
+			   (let* ((txt (truncate-string-to-width (cadr map) 2))
+				  (len (length txt)))
+			     (if (eq len 2)
+				 (if terminal ; no half spaces on terminal
+				     (propertize (concat txt " ") 'face face-spec)
+				   (concat pad-left
+					   (propertize "_" 'display
+						       (propertize txt 'face face-spec))
+					   pad-right))
+			       (propertize (concat " " txt " ") 'face face-spec))))))
+	      (if disp
+		  (setf (alist-get kind (aref kind-icon--cache slot)) disp)
+		(propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face)))
+	  kind-icon--unknown))))
 
 ;;;###autoload
 (defun kind-icon-margin-formatter (metadata)
@@ -324,7 +326,7 @@ function to the relevant margin-formatters list."
   "Create and return a custom kind-icon affixation function.
 The company-kind function should be passed in as KIND-FUNC and
 any annotation-function as ANN-FUNC.  The returned function
-supplies a candiate kind badge -- abbreviated text key or icon --
+supplies a candidate kind badge -- abbreviated text key or icon --
 as an affixation prefix.  ANN-FUNC, if non-nil, will be called
 and its result used as the affixation suffix, first setting the
 `completions-annotations' face on it."
