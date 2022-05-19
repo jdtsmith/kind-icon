@@ -278,27 +278,30 @@ background-color."
 		 (dfw (default-font-width))
 		 (terminal (eq dfw 1))
 		 (half (/ dfw 2))
-		 (pad-right (propertize " " 'display `(space :width (,half))))
-		 (pad-left (propertize " " 'display `(space :width (,(- dfw half)))))
+		 (face-spec `(:weight bold :foreground ,col :background ,bg-col))
+		 (pad-right (propertize " " 'display `(space :width (,half))
+					'face face-spec))
+		 (pad-left (propertize " " 'display `(space :width (,(- dfw half)))
+				       'face face-spec))
 		 (disp (if-let ((kind-icon-use-icons)
 				(icon-name (plist-get plist :icon))
 				(icon (kind-icon--get-icon-safe icon-name col bg-col)))
 			   ;; icon: always 2x1, half-space on each side
 			   (propertize ; pretend it's one char to allow padding
-			    (concat pad-left (propertize "*" 'display icon) pad-right)
-			    'face `(:background ,bg-col))
+			    (concat pad-left
+				    (propertize "*" 'display icon 'face `(:background ,bg-col))
+				    pad-right))
 			 ;; text, 1 or 2 chars, centered with full or half space on each side
 			 (let* ((txt (truncate-string-to-width (cadr map) 2))
-				(len (length txt))
-				(txt-disp (if (eq len 2)
-					      (if terminal
-						  (concat txt " ")
-						(concat pad-left
-							(propertize "_" 'display txt)
-							pad-right))
-					    (concat " " txt " "))))
-			   (propertize txt-disp 'face
-				       `(:weight bold :foreground ,col :background ,bg-col))))))
+				(len (length txt)))
+			   (if (eq len 2)
+			       (if terminal
+				   (propertize (concat txt " ") 'face face-spec)
+				 (concat pad-left
+					 (propertize "_" 'display
+						     (propertize txt 'face face-spec))
+					 pad-right))
+			     (propertize (concat " " txt " ") 'face face-spec))))))
 	    (if disp
 		(setf (alist-get kind kind-icon--cache) disp)
 	      (propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face)))
