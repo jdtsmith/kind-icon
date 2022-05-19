@@ -237,7 +237,8 @@ In the process, svg-lib also downloads and caches them."
 			     (kind-icon-formatted k)))
 			 '(nil t) " ")
 		       "\t" ,(symbol-name k) "\n")))
-	    (mapcar 'car kind-icon-mapping)))))
+	    (mapcar 'car kind-icon-mapping)))
+    (help-mode)))
 
 (defun kind-icon-formatted (kind)
   "Return a formatted kind badge, either icon or text abbreviation.
