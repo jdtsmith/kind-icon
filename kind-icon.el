@@ -271,7 +271,7 @@ background-color."
 		   (default-bg (if kind-icon-default-face
 				   (face-attribute kind-icon-default-face :background nil t)
 				 (frame-parameter nil 'background-color)))
-		   (bg-col (if kind-icon-blend-background
+		   (bg-col (if (and kind-icon-blend-background (not terminal))
 			       (kind-icon--rgb-blend
 				(color-name-to-rgb col)
 				(color-name-to-rgb default-bg)
