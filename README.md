@@ -129,6 +129,7 @@ If you get an error mentioning `corfu--post-command`, and notice that you don't 
 
 A small set of packages related to `kind-icon`:
 
+- [corfu](https://github.com/minad/corfu) Is a sleek in-buffer completion frontend which fully supports standard emacs completions providers (aka completion at point functions — CAPFs).  It was the original to include margin-formatter support. 
 - [company-mode](https://github.com/company-mode/company-mode) is the all-inclusive completion system, and includes built-in support for icons based on the Microsoft VSCode set.
 - [all-the-icons](https://github.com/iyefrat/all-the-icons.el) is font-based icon library which can be used to enrich dired, neotree, the mode line and others with icons.
 - [all-the-icons-completion](https://github.com/iyefrat/all-the-icons-completion/) builds on `all-the-icons` to enrich minibuffer-based completion, including support for the excellent [marginalia](https://github.com/minad/marginalia) annotator. 
