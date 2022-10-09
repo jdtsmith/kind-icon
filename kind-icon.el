@@ -261,11 +261,12 @@ background-color."
 	(if-let ((map (assq kind kind-icon-mapping))
 		 (plist (cddr map)))
 	    (let* ((kind-face (plist-get plist :face))
-		   (col (if kind-face
-			    (face-attribute kind-face :foreground nil t)
-			  (if kind-icon-default-face
-			      (face-attribute kind-icon-default-face :foreground nil t)
-			    (frame-parameter nil 'foreground-color))))
+		   (col (or
+			 (and kind-face
+			      (face-attribute kind-face :foreground nil t))
+			 (and kind-icon-default-face
+			      (face-attribute kind-icon-default-face :foreground nil t))
+			 (frame-parameter nil 'foreground-color)))
 		   (kind-face-bg (and kind-face
 				      (face-attribute kind-face :background nil t)))
 		   (default-bg (if kind-icon-default-face
