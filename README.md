@@ -134,6 +134,10 @@ A small set of packages related to `kind-icon`:
 - [all-the-icons](https://github.com/iyefrat/all-the-icons.el) is font-based icon library which can be used to enrich dired, neotree, the mode line and others with icons.
 - [all-the-icons-completion](https://github.com/iyefrat/all-the-icons-completion/) builds on `all-the-icons` to enrich minibuffer-based completion, including support for the excellent [marginalia](https://github.com/minad/marginalia) annotator. 
 
+## Notes
+
+If you are using the emacs-mac fork of emacs on MacOS >=10.13, you should compile with `librsvg` support, as the native SVG support using WebKit2 is slow and will impact performance. 
+
 ## Thanks
 
 - to @rougier for the excellent [svg-lib](https://github.com/rougier/svg-lib).
