@@ -243,7 +243,7 @@ In the process, svg-lib also downloads and caches them."
     (help-mode)))
 
 (defun kind-icon-formatted (kind)
-  "Return a formatted kind badge, either icon or text abbreviation.
+  "Return a formatted KIND badge, either icon or text abbreviation.
 Caches this badge in `kind-icon--cache', and returns the cached
 value, if set.  If no matching kind is specified, returns a `??'
 warning label.  For the foreground color of the badge, uses the
