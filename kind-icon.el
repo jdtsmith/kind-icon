@@ -224,11 +224,9 @@ float FRAC."
   "Preview all kind icons.
 In the process, svg-lib also downloads and caches them."
   (interactive)
-  (with-current-buffer (get-buffer-create "*kind-icon-preview*")
+  (with-current-buffer-window "*kind-icon-preview*" nil nil
     (font-lock-mode 0)
-    (view-buffer-other-window (current-buffer))
     (let ((inhibit-read-only t))
-      (erase-buffer)
       (insert "kind-icon badges\n\ntxt icn\tkind\n")
       (mapc (lambda (k)
 	      (apply 'insert
