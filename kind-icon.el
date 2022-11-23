@@ -112,12 +112,12 @@ An vector of two alist for non-terminal and terminal.")
     (snippet "S" :icon "note-text-outline" :face font-lock-string-face)
     (string "s" :icon "sticker-text-outline" :face font-lock-string-face)
     (struct "%" :icon "code-braces" :face font-lock-variable-name-face)
-    (text "tx" :icon "script-text-outline" :face shadow)
+    (text "tx" :icon "script-text-outline" :face font-lock-doc-face)
     (typeparameter "tp" :icon "format-list-bulleted-type" :face font-lock-type-face)
-    (unit "u" :icon "ruler-square" :face shadow)
+    (unit "u" :icon "ruler-square" :face font-lock-constant-face)
     (value "v" :icon "plus-circle-outline" :face font-lock-builtin-face)
     (variable "va" :icon "variable" :face font-lock-variable-name-face)
-    (t "." :icon "crosshairs-question" :face shadow))
+    (t "." :icon "crosshairs-question" :face font-lock-warning-face))
   "Mapping of kinds.
 The format should be an alist of type:
 
