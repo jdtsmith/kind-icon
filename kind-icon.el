@@ -171,12 +171,11 @@ This is used for the prefix background, if
   :set #'kind-icon--set-default-clear-cache)
 
 (defcustom kind-icon-extra-space nil
-  "The number of extra spaces to use between the icon and the candidate.
+  "Whether to include extra one-half space between the icon and the candidate.
 Note that this extra space has no background color applied, so
 inherits the UI's styling (including selection)."
   :group 'kind-icon
-  :type '(choice (const :tag "None" nil)
-		 (integer :tag "Number of spaces"))
+  :type 'boolean
   :set #'kind-icon--set-default-clear-cache)
 
 (defcustom kind-icon-default-face nil
@@ -268,7 +267,8 @@ In the process, svg-lib also downloads and caches them."
 
 (defsubst kind-icon--extra-space ()
   "Format extra space at right of badge."
-  (when kind-icon-extra-space (make-string kind-icon-extra-space ?\s)))
+  (when kind-icon-extra-space
+    (propertize " " 'display '(space :width 0.5))))
 
 (defun kind-icon-formatted (kind)
   "Return a formatted KIND badge, either icon or text abbreviation.
