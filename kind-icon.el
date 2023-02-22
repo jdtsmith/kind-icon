@@ -61,7 +61,7 @@
   (require 'subr-x))
 
 (defvar kind-icon--cache [nil nil]
-  "The cache of styled and padded label (text or icon).  
+  "The cache of styled and padded label (text or icon).
 An vector of two alist for non-terminal and terminal.")
 
 (defun kind-icon-reset-cache ()
@@ -70,6 +70,8 @@ An vector of two alist for non-terminal and terminal.")
   (setq kind-icon--cache (make-vector 2 nil)))
 
 (defun kind-icon--set-default-clear-cache (&rest args)
+  "Clear cache and call `set-default' on ARGS.
+Use as a custom-set function."
   (kind-icon-reset-cache)
   (apply #'set-default args))
 
@@ -129,18 +131,19 @@ the SHORT-TEXT (two characters max), depending on the value of
 variable `kind-icon-use-icons' and presence of :icon in the
 PLIST.  KIND and SHORT-TEXT are required.  The PLIST is optional
 and can include keywords :icon and :face.  :icon is a name of an
-icon from the material collection (see `svg-lib'). :face is a
+icon from the material collection (see `svg-lib').  :face is a
 face from which the :foreground face-property is used for the
-foreground. If `kind-icon-blend-background' is non-nil, the
+foreground.  If `kind-icon-blend-background' is non-nil, the
 icon's background color is automatically computed to lie between
 the default-face or frame background color and the foreground
 color (see `kind-icon-blend-frac').  If
 `kind-icon-blend-background' is nil, the background color is
 taken from the :face's background in this map, or, if that is
 missing or unspecified, from the frame's background color."
-  :link '(url-link "https://materialdesignicons.com")
+  :group 'kind-icon
+  :link '(url-link "https://pictogrammers.com/library/mdi/")
   :set #'kind-icon--set-default-clear-cache
-  :type '(repeat 
+  :type '(repeat
 	  (list :tag "Mapping"
 		(symbol :tag "Kind")
 		(string :tag "Short-Text")
@@ -160,7 +163,7 @@ missing or unspecified, from the frame's background color."
 (defcustom kind-icon-blend-frac 0.12
   "Fractional blend between foreground and background colors.
 This is used for the prefix background, if
-kind-icon-blend-background is non-nil."
+`kind-icon-blend-background' is non-nil."
   :type 'float
   :set #'kind-icon--set-default-clear-cache)
 
@@ -184,7 +187,9 @@ See `svg-lib-style-compute-default'."
 
 (defun kind-icon--get-icon-safe (icon &optional col bg-col)
   "Retrieve ICON (a string) from the material database.
-Uses svg-lib, guarding against non-availability or network errors."
+Uses svg-lib, guarding against non-availability or network
+errors.  COL and BG-COL are foreground and background color to
+apply to the icon."
   (if (fboundp 'svg-lib-icon)
       (condition-case err
 	  (apply #'svg-lib-icon icon nil
@@ -197,6 +202,7 @@ Uses svg-lib, guarding against non-availability or network errors."
 	 nil))))
 
 (defun kind-icon--preview (widget _e)
+  "Preview the icon in WIDGET in the echo area."
   (let* ((icon-name (widget-value widget)))
     (message "%S looks like: %s" icon-name
 	     (if-let ((icon (kind-icon--get-icon-safe icon-name)))
@@ -213,6 +219,7 @@ float FRAC."
 		    rgb1 rgb2)))
 
 (defsubst kind-icon--metadata-get (metadata type-name)
+  "Get METADATA for keyword TYPE-NAME from the completion properties."
   (or
    (plist-get completion-extra-properties (intern (format ":%s" type-name)))
    (cdr (assq (intern type-name) metadata))))
@@ -348,12 +355,13 @@ and its result used as the affixation suffix, first setting the
 
 ;;;###autoload
 (defun kind-icon-enhance-completion (completion-function)
-  "A wrapper for completion-in-region-functions.
-This wrapper sets a custom affixation-function which places an
-icon in the prefix slot. Use it like:
+  "A wrapper for `completion-in-region-functions'.
+This wrapper sets a custom `affixation-function' on
+COMPLETION-FUNCTION, which places an icon in the prefix slot.  Use
+it like:
 
-  (setq completion-in-region-function 
-     (kind-icon-enhance-completion 
+  (setq completion-in-region-function
+     (kind-icon-enhance-completion
        completion-in-region-function))"
   (lambda (start end table &optional pred)
     (let* ((str (buffer-substring start (point)))
