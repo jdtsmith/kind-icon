@@ -82,6 +82,7 @@ Use as a custom-set function."
 
 (defcustom kind-icon-use-icons (featurep 'svg-lib)
   "Whether to use icons for prefix display."
+  :group 'kind-icon
   :set #'kind-icon--set-default-clear-cache
   :type 'boolean)
 
@@ -157,6 +158,7 @@ missing or unspecified, from the frame's background color."
 
 (defcustom kind-icon-blend-background t
   "Whether to set a custom background blended from foreground."
+  :group 'kind-icon
   :type 'boolean
   :set #'kind-icon--set-default-clear-cache)
 
@@ -164,6 +166,7 @@ missing or unspecified, from the frame's background color."
   "Fractional blend between foreground and background colors.
 This is used for the prefix background, if
 `kind-icon-blend-background' is non-nil."
+  :group 'kind-icon
   :type 'float
   :set #'kind-icon--set-default-clear-cache)
 
@@ -175,6 +178,7 @@ the foreground color is taken from the foreground of this face,
 or (if nil) to the default frame foreground color.  The
 background color is also taken from this face, if provided,
 otherwise defaulting to the frame background color."
+  :group 'kind-icon
   :type 'face
   :set #'kind-icon--set-default-clear-cache)
 
@@ -182,6 +186,7 @@ otherwise defaulting to the frame background color."
   '(:padding 0 :stroke 0 :margin 0 :radius 0 :height 1.0 :scale 1.0)
   "Default style parameters for building SVG icons.
 See `svg-lib-style-compute-default'."
+  :group 'kind-icon
   :type 'plist
   :set #'kind-icon--set-default-clear-cache)
 
