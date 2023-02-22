@@ -170,6 +170,15 @@ This is used for the prefix background, if
   :type 'float
   :set #'kind-icon--set-default-clear-cache)
 
+(defcustom kind-icon-extra-space nil
+  "The number of extra spaces to use between the icon and the candidate.
+Note that this extra space has no background color applied, so
+inherits the UI's styling (including selection)."
+  :group 'kind-icon
+  :type '(choice (const :tag "None" nil)
+		 (integer :tag "Number of spaces"))
+  :set #'kind-icon--set-default-clear-cache)
+
 (defcustom kind-icon-default-face nil
   "The default face to use for coloring.
 Normally foreground colors are supplied by the face matching in
@@ -236,21 +245,30 @@ float FRAC."
   "Preview all kind icons.
 In the process, svg-lib also downloads and caches them."
   (interactive)
+  (kind-icon-reset-cache)
   (with-current-buffer-window "*kind-icon-preview*" nil nil
+
     (font-lock-mode 0)
-    (let ((inhibit-read-only t))
-      (insert "kind-icon badges\n\ntxt icn\tkind\n")
+    (let ((inhibit-read-only t)
+	  (extra (kind-icon--extra-space)))
+      (insert (concat "kind-icon badges\n\n"
+		      "txt " extra
+		      "icn" extra
+		      " kind\n"))
       (mapc (lambda (k)
 	      (apply 'insert
 		     `(,(mapconcat
-			 (lambda (v)
-			   (kind-icon-reset-cache)
+			 (lambda (v) 
 			   (let ((kind-icon-use-icons v))
 			     (kind-icon-formatted k)))
 			 '(nil t) " ")
-		       "\t" ,(symbol-name k) "\n")))
+		       " " ,(symbol-name k) "\n")))
 	    (mapcar 'car kind-icon-mapping)))
     (help-mode)))
+
+(defsubst kind-icon--extra-space ()
+  "Format extra space at right of badge."
+  (when kind-icon-extra-space (make-string kind-icon-extra-space ?\s)))
 
 (defun kind-icon-formatted (kind)
   "Return a formatted KIND badge, either icon or text abbreviation.
@@ -268,12 +286,13 @@ the :face's background, `kind-icon-default-face', or the frame
 background-color."
   (let* ((dfw (default-font-width))
 	 (terminal (eq dfw 1))
-	 (slot (if terminal 1 0)))
+	 (slot (if terminal 1 0))
+	 (extra (kind-icon--extra-space)))
     (or (alist-get kind (aref kind-icon--cache slot))
 	(if-let ((map (assq kind kind-icon-mapping))
 		 (plist (cddr map)))
 	    (let* ((kind-face (plist-get plist :face))
-		   (col (or 
+		   (col (or
 			 (cl-loop for face in `(,kind-face ,kind-icon-default-face)
 				  for fcol = (if-let ((face)
 						      (c (face-attribute face :foreground nil t))
@@ -294,36 +313,38 @@ background-color."
 			     (if (and kind-face-bg (not (eq kind-face-bg 'unspecified)))
 				 kind-face-bg
 			       default-bg)))
-		   (half (/ dfw 2))
+		   (half (/ dfw 2))   ; integer division, may truncate
 		   (face-spec `(:weight bold :foreground ,col :background ,bg-col))
 		   (pad-right (propertize " " 'display `(space :width (,half))
 					  'face face-spec))
 		   (pad-left (propertize " " 'display `(space :width (,(- dfw half)))
 					 'face face-spec))
-		   (disp (if-let ((kind-icon-use-icons)
-				  ((not terminal))
-				  (icon-name (plist-get plist :icon))
-				  (icon (kind-icon--get-icon-safe icon-name col bg-col)))
-			     ;; icon: always 2x1, half-space on each side
-			     (propertize ; pretend it's one char to allow padding
-			      (concat pad-left
-				      (propertize "*" 'display icon 'face `(:background ,bg-col))
-				      pad-right))
-			   ;; text, 1 or 2 chars, centered with full or half space on each side
-			   (let* ((txt (truncate-string-to-width (cadr map) 2))
-				  (len (length txt)))
-			     (if (eq len 2)
-				 (if terminal ; no half spaces on terminal
-				     (propertize (concat txt " ") 'face face-spec)
-				   (concat pad-left
-					   (propertize "_" 'display
-						       (propertize txt 'face face-spec))
-					   pad-right))
-			       (propertize (concat " " txt " ") 'face face-spec))))))
+		   (disp (concat
+			  (if-let ((kind-icon-use-icons)
+				   ((not terminal))
+				   (icon-name (plist-get plist :icon))
+				   (icon (kind-icon--get-icon-safe icon-name col bg-col)))
+			      ;; icon: always 2x1, half-space on each side
+			      (propertize ; pretend it's one char to allow padding
+			       (concat pad-left
+				       (propertize "*" 'display icon 'face `(:background ,bg-col))
+				       pad-right))
+			    ;; text, 1 or 2 chars, centered with full or half space on each side
+			    (let* ((txt (truncate-string-to-width (cadr map) 2))
+				   (len (length txt)))
+			      (if (eq len 2)
+				  (if terminal ; no half spaces on terminal
+				      (propertize (concat txt " ") 'face face-spec)
+				    (concat pad-left
+					    (propertize "_" 'display
+							(propertize txt 'face face-spec))
+					    pad-right))
+				(propertize (concat " " txt " ") 'face face-spec))))
+			  extra)))
 	      (if disp
 		  (setf (alist-get kind (aref kind-icon--cache slot)) disp)
-		(propertize (concat pad-left "??" pad-right) 'face font-lock-warning-face)))
-	  kind-icon--unknown))))
+		(propertize (concat pad-left "??" pad-right extra) 'face font-lock-warning-face)))
+	  (concat kind-icon--unknown extra)))))
 
 ;;;###autoload
 (defun kind-icon-margin-formatter (metadata)
