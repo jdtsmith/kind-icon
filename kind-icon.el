@@ -54,11 +54,11 @@
 ;; both short-text and icons.
 
 ;;; Code:
-
-(eval-when-compile
-  (require 'subr-x))
+(require 'cl-lib)
 (require 'svg-lib nil 'noerror)
 (require 'color)
+(eval-when-compile
+  (require 'subr-x))
 
 (defvar kind-icon--cache [nil nil]
   "The cache of styled and padded label (text or icon).  
