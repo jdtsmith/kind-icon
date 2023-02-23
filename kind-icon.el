@@ -240,6 +240,11 @@ float FRAC."
 (defconst kind-icon--unknown
   (propertize "???" 'face '(:weight bold :background "red")))
 
+(defsubst kind-icon--extra-space ()
+  "Format extra space at right of badge."
+  (when kind-icon-extra-space
+    (propertize " " 'display '(space :width 0.5))))
+
 (defun kind-icon-preview-all ()
   "Preview all kind icons.
 In the process, svg-lib also downloads and caches them."
@@ -264,11 +269,6 @@ In the process, svg-lib also downloads and caches them."
 		       " " ,(symbol-name k) "\n")))
 	    (mapcar 'car kind-icon-mapping)))
     (help-mode)))
-
-(defsubst kind-icon--extra-space ()
-  "Format extra space at right of badge."
-  (when kind-icon-extra-space
-    (propertize " " 'display '(space :width 0.5))))
 
 (defun kind-icon-formatted (kind)
   "Return a formatted KIND badge, either icon or text abbreviation.
