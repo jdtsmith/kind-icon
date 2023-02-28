@@ -198,14 +198,15 @@ See `svg-lib-style-compute-default'."
   :type 'plist
   :set #'kind-icon--set-default-clear-cache)
 
-(defun kind-icon--get-icon-safe (icon &optional col bg-col)
+(defun kind-icon--get-icon-safe (icon &optional col bg-col plist)
   "Retrieve ICON (a string) from the material database.
 Uses svg-lib, guarding against non-availability or network
 errors.  COL and BG-COL are foreground and background color to
-apply to the icon."
+apply to the icon.  PLIST is an optional additional list of key
+value pairs to provide to `svg-lib-icon'."
   (if (fboundp 'svg-lib-icon)
       (condition-case err
-	  (apply #'svg-lib-icon icon nil
+	  (apply #'svg-lib-icon icon plist
 		 `(,@kind-icon-default-style
 		   ,@(if col `(:foreground ,col))
 		   ,@(if bg-col `(:background ,bg-col))))
@@ -319,11 +320,14 @@ background-color."
 					  'face face-spec))
 		   (pad-left (propertize " " 'display `(space :width (,(- dfw half)))
 					 'face face-spec))
+		   (plist-extra (cl-loop for (key val) on plist by #'cddr
+					 unless (memq key '(:face :icon))
+					 append `(,key ,val)))
 		   (disp (concat
 			  (if-let ((kind-icon-use-icons)
 				   ((not terminal))
 				   (icon-name (plist-get plist :icon))
-				   (icon (kind-icon--get-icon-safe icon-name col bg-col)))
+				   (icon (kind-icon--get-icon-safe icon-name col bg-col plist-extra)))
 			      ;; icon: always 2x1, half-space on each side
 			      (propertize ; pretend it's one char to allow padding
 			       (concat pad-left
