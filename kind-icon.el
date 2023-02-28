@@ -250,9 +250,7 @@ float FRAC."
   "Preview all kind icons.
 In the process, svg-lib also downloads and caches them."
   (interactive)
-  (kind-icon-reset-cache)
   (with-current-buffer-window "*kind-icon-preview*" nil nil
-
     (font-lock-mode 0)
     (let ((inhibit-read-only t)
 	  (extra (kind-icon--extra-space)))
@@ -264,9 +262,10 @@ In the process, svg-lib also downloads and caches them."
 	      (apply 'insert
 		     `(,(mapconcat
 			 (lambda (v) 
-			   (let ((kind-icon-use-icons v))
+			   (let ((kind-icon-use-icons v)
+				 (kind-icon--cache nil))
 			     (kind-icon-formatted k)))
-			 '(nil t) " ")
+			 (list nil t) " ")
 		       " " ,(symbol-name k) "\n")))
 	    (mapcar 'car kind-icon-mapping)))
     (help-mode)))
@@ -289,7 +288,8 @@ background-color."
 	 (terminal (eq dfw 1))
 	 (slot (if terminal 1 0))
 	 (extra (kind-icon--extra-space)))
-    (or (alist-get kind (aref kind-icon--cache slot))
+    (or (and kind-icon--cache
+	     (alist-get kind (aref kind-icon--cache slot)))
 	(if-let ((map (assq kind kind-icon-mapping))
 		 (plist (cddr map)))
 	    (let* ((kind-face (plist-get plist :face))
@@ -345,9 +345,11 @@ background-color."
 					    pad-right))
 				(propertize (concat " " txt " ") 'face face-spec))))
 			  extra)))
-	      (if disp
-		  (setf (alist-get kind (aref kind-icon--cache slot)) disp)
-		(propertize (concat pad-left "??" pad-right extra) 'face font-lock-warning-face)))
+	      (if (and kind-icon--cache disp)
+		  (setf (alist-get kind (aref kind-icon--cache slot)) disp))
+	      (or disp
+		  (propertize (concat pad-left "??" pad-right extra)
+			      'face font-lock-warning-face)))
 	  (concat kind-icon--unknown extra)))))
 
 ;;;###autoload
