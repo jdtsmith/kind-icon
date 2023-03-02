@@ -108,7 +108,8 @@ Use `M-x kind-icon-preview-all` to reset and preview all icons (text and SVG ico
 
 <div align="center">
 
-  ![image](https://user-images.githubusercontent.com/93749/167690072-d8822ada-62b8-4b38-b8ea-987d83b38951.png)
+  <img width="193" alt="kind-icon preview" src="https://user-images.githubusercontent.com/93749/222329622-8440d593-cfae-46a8-ab3f-0f3349b88260.png">
+
 
 </div>
 
