@@ -1,11 +1,11 @@
 ;;; kind-icon.el --- Completion kind icons  -*- lexical-binding: t -*-
 
-;; Copyright (C) 2021-2022  Free Software Foundation, Inc.
+;; Copyright (C) 2021-2023  Free Software Foundation, Inc.
 
 ;; Author: J.D. Smith <jdtsmith@gmail.com>
 ;; URL: https://github.com/jdtsmith/kind-icon
 ;; Package-Requires: ((emacs "27.1") svg-lib)
-;; Version: 0.1.9
+;; Version: 0.2.0
 ;; Keywords: completion
 
 ;; kind-icon is free software: you can redistribute it
