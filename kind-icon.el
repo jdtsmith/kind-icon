@@ -94,7 +94,9 @@ Use as a custom-set function."
     (command "cm" :icon "code-greater-than" :face default)
     (constant "co" :icon "lock-remove-outline" :face font-lock-constant-face)
     (constructor "cn" :icon "table-column-plus-after" :face font-lock-function-name-face)
+    ;; FIXME: remove this once eglot patch is in Emacs
     (enummember "em" :icon "order-bool-ascending-variant" :face font-lock-builtin-face)
+    (enum-member "em" :icon "order-bool-ascending-variant" :face font-lock-builtin-face)
     (enum "e" :icon "format-list-bulleted-square" :face font-lock-builtin-face)
     (event "ev" :icon "lightning-bolt-outline" :face font-lock-warning-face)
     (field "fd" :icon "application-braces-outline" :face font-lock-variable-name-face)
@@ -116,7 +118,9 @@ Use as a custom-set function."
     (string "s" :icon "sticker-text-outline" :face font-lock-string-face)
     (struct "%" :icon "code-braces" :face font-lock-variable-name-face)
     (text "tx" :icon "script-text-outline" :face font-lock-doc-face)
+    ;; FIXME: remove this once eglot patch is in Emacs
     (typeparameter "tp" :icon "format-list-bulleted-type" :face font-lock-type-face)
+    (type-parameter "tp" :icon "format-list-bulleted-type" :face font-lock-type-face)
     (unit "u" :icon "ruler-square" :face font-lock-constant-face)
     (value "v" :icon "plus-circle-outline" :face font-lock-builtin-face)
     (variable "va" :icon "variable" :face font-lock-variable-name-face)
