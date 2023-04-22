@@ -54,7 +54,7 @@ for whichever `completion-ui` you are using.  Note that for this method to work,
 
 ## Configuration
 
-The configuration defaults should work fine, but `kind-icon` can be customized to change the icons and colors, preference of icons vs. short-text (or mixed) prefixes, and more. 
+The configuration defaults should work fine, but `kind-icon` can be customized to change the icons and colors, preference of icons vs. short-text (or mixed) prefixes, and more. See [the wiki](https://github.com/jdtsmith/kind-icon/wiki) for configuration ideas including alternative icon sets.
 
 ### Variables
 
@@ -87,7 +87,7 @@ By default, `kind-icon` creates a _blended_ background color that is a mix of a 
 
 ### Icons 
 
-Check the [material icon library](https://pictogrammers.com/library/mdi/) for the icons you can use, more than 7,000 of them!  All you need to "use" an icon is its name.  The easiest approach is to `M-x customize-variable kind-icon-mapping`, find the kind you are interested in, and change its icon. Hit the `Preview` button and check the message buffer to confirm it's the icon you were after, and Apply your changes.
+Check the [material icon library](https://pictogrammers.com/library/mdi/) for the default icons you can use, more than 7,000 of them!  All you need to "use" an icon is its name.  The easiest approach is to `M-x customize-variable kind-icon-mapping`, find the kind you are interested in, and change its icon. Hit the `Preview` button and check the message buffer to confirm it's the icon you were after, and Apply your changes.
 
 **Note that `svg-lib`, which `kind-icon` uses, downloads and caches icons, by default in `.emacs.d/.cache/svg-lib/`.**  If no network connection is present, and the icon has not been cached on disk, the short-text is used as a backup for that session. 
 
@@ -98,6 +98,8 @@ And yes, you can use **any icons**!
   ![image](https://user-images.githubusercontent.com/93749/141231207-94d14bd8-0e85-4315-aa29-f6200b2729cc.png)
 
 </div>
+
+In recent versions you can use icons from other "collections" supported by svg-lib; just at a `:collection` key to `kind-icon-mapping` (see above).
 
 ### Old School: Text-based Icons
 
@@ -135,6 +137,7 @@ A small set of packages related to `kind-icon`:
 - [company-mode](https://github.com/company-mode/company-mode) is the all-inclusive completion system, and includes built-in support for icons based on the Microsoft VSCode set.
 - [all-the-icons](https://github.com/iyefrat/all-the-icons.el) is font-based icon library which can be used to enrich dired, neotree, the mode line and others with icons.
 - [all-the-icons-completion](https://github.com/iyefrat/all-the-icons-completion/) builds on `all-the-icons` to enrich minibuffer-based completion, including support for the excellent [marginalia](https://github.com/minad/marginalia) annotator. 
+- [nerd-icons](https://github.com/rainstormstudio/nerd-icons.el) makes it easy to use many of the same icons supported via SVG download within a single installed [NerdFont](https://www.nerdfonts.com).  See [the wiki](https://github.com/jdtsmith/kind-icon/wiki) for config.
 
 ## Notes
 
