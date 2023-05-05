@@ -99,7 +99,7 @@ And yes, you can use **any icons**!
 
 </div>
 
-In recent versions you can use icons from other "collections" supported by svg-lib; just at a `:collection` key to `kind-icon-mapping` (see above).
+In recent versions you can use icons from other "collections" supported by svg-lib; just add a `:collection` key to `kind-icon-mapping` (see above).
 
 ### Old School: Text-based Icons
 
