@@ -191,7 +191,7 @@ or (if nil) to the default frame foreground color.  The
 background color is also taken from this face, if provided,
 otherwise defaulting to the frame background color."
   :group 'kind-icon
-  :type 'face
+  :type '(choice face (const :value nil :tag "Default"))
   :set #'kind-icon--set-default-clear-cache)
 
 (defcustom kind-icon-default-style
