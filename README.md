@@ -116,6 +116,10 @@ Use `M-x kind-icon-preview-all` to reset and preview all icons (text and SVG ico
 
 </div>
 
+### Theme changes
+
+When the theme changes, the blend colors (if enabled) may need to be recomputed; use `kind-icon-reset-cache` to do so.  If you want to enable this to happen automatically, see [this post](https://github.com/jdtsmith/kind-icon/issues/34#issuecomment-1668560185).
+
 ### Debugging Tips
 
 If you get an error mentioning `corfu--post-command`, and notice that you don't get a backtrace even after invoking `toggle-debug-on-error`, this is because backtraces are inhibited during post-command hooks.  To re-enable them, evaluate the following (e.g. in your `*scratch*` buffer):
