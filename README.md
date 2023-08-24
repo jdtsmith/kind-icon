@@ -142,7 +142,8 @@ A small set of packages related to `kind-icon`:
 - [all-the-icons](https://github.com/iyefrat/all-the-icons.el) is font-based icon library which can be used to enrich dired, neotree, the mode line and others with icons.
 - [all-the-icons-completion](https://github.com/iyefrat/all-the-icons-completion/) builds on `all-the-icons` to enrich minibuffer-based completion, including support for the excellent [marginalia](https://github.com/minad/marginalia) annotator. 
 - [nerd-icons](https://github.com/rainstormstudio/nerd-icons.el) makes it easy to use many of the same icons supported via SVG download within a single installed [NerdFont](https://www.nerdfonts.com).  See [the wiki](https://github.com/jdtsmith/kind-icon/wiki) for config.
-
+- [nerd-icons-completion](https://github.com/rainstormstudio/nerd-icons-completion) builds on `nerd-icons` to offer minibuffer-based completion.
+ 
 ## Notes
 
 If you are using the emacs-mac fork of emacs on MacOS >=10.13, you should compile with `librsvg` support, as the native SVG support using WebKit2 is slow and will impact performance. 
