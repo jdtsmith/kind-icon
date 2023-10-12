@@ -195,7 +195,7 @@ otherwise defaulting to the frame background color."
   :set #'kind-icon--set-default-clear-cache)
 
 (defcustom kind-icon-default-style
-  '(:padding 0 :stroke 0 :margin 0 :radius 0 :height 1.0 :scale 1.0)
+  '(:padding 0 :stroke 0 :margin 0 :radius 0 :height 1.0 :scale 1.0 :background nil)
   "Default style parameters for building SVG icons.
 See `svg-lib-style-compute-default'."
   :group 'kind-icon
@@ -213,7 +213,7 @@ value pairs to provide to `svg-lib-icon'."
 	  (apply #'svg-lib-icon icon plist
 		 `(,@kind-icon-default-style
 		   ,@(if col `(:foreground ,col))
-		   ,@(if bg-col `(:background ,bg-col))))
+		   :background ,bg-col)) ; nil = transparent
 	((error)
 	 (warn "Error retrieving icon %s, falling back on short-text\n%s"
 	       icon (cdr err))
@@ -316,8 +316,7 @@ background-color."
 				(color-name-to-rgb default-bg)
 				kind-icon-blend-frac)
 			     (if (and kind-face-bg (not (eq kind-face-bg 'unspecified)))
-				 kind-face-bg
-			       default-bg)))
+				 kind-face-bg)))
 		   (half (/ dfw 2))   ; integer division, may truncate
 		   (face-spec `(:weight bold :foreground ,col :background ,bg-col))
 		   (pad-right (propertize " " 'display `(space :width (,half))
