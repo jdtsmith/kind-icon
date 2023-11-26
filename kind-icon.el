@@ -160,7 +160,7 @@ missing or unspecified, from the frame's background color."
 				       :action kind-icon--preview))
 			(:face (face :tag "Face")))))))
 
-(defcustom kind-icon-blend-background t
+(defcustom kind-icon-blend-background nil
   "Whether to set a custom background blended from foreground."
   :group 'kind-icon
   :type 'boolean
