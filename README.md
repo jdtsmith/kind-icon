@@ -3,17 +3,22 @@ This emacs package adds configurable icon or text-based completion prefixes base
 
 ## Examples
 
-A few examples of `kind-icon` in action with [lsp-mode](https://github.com/emacs-lsp/lsp-mode) providing completions:
+A few examples of `kind-icon` in action with corfu (and popupinfo).  
 
-<div align="center">
+### SVG icons
 
-|   |   |
-| :---: | :---: |
-| **With [corfu](https://github.com/minad/corfu) and [orderless](https://github.com/oantolin/orderless):**  |   **Using text-based icons:** |
-| ![image](https://user-images.githubusercontent.com/93749/141227979-9f22cbb6-8029-42f1-86b4-f4cdd03636b2.png) | ![image](https://user-images.githubusercontent.com/93749/141225205-9a718be8-f352-451f-892b-aaacae1eeaf6.png) |
-| **Mix of text and icons:**  |   **Blended background color disabled:** |
-| ![image](https://user-images.githubusercontent.com/93749/141231327-5b15a92f-87f6-4a52-aff4-d7e9229842a9.png) | ![image](https://user-images.githubusercontent.com/93749/141227004-e4514961-245c-4aa0-888a-65c0a1b63757.png) |
-</div>
+With the new default transparent icon background. 
+
+  <img width="675" alt="kind-icon SVG1" src="https://github.com/jdtsmith/kind-icon/assets/93749/4681a6f1-ba12-4965-954a-6b5edc6b168d">
+
+With blended icon backgrounds: 
+
+  <img width="672" alt="image" src="https://github.com/jdtsmith/kind-icon/assets/93749/e9b6bda8-efa7-4e25-a1a0-e09423b6a64b">
+
+### Text-only icons:
+
+  <img width="740" alt="kind-icon text-only" src="https://github.com/jdtsmith/kind-icon/assets/93749/2001a291-f21a-421c-b9b6-e474f3132177">
+
 
 ## Installation 
 
@@ -69,7 +74,7 @@ The configuration defaults should work fine, but `kind-icon` can be customized t
 
 - `kind-icon-default-face`: A face from which the icon background color will be taken and blended with the `:face` foreground color in the mapping table to create a custom background color.  If not set, the frame default background color will be used for this purpose.  Similarly, the foreground color for this face, if set, will be used if a `:face` foreground is missing from the mapping. 
 
-- `kind-icon-blend-background`: If non-nil, computes a blend between a nominal background color (from either the background property of `kind-icon-default-face`, if set, or frame background color) and the foreground :face.  If `kind-icon-blend-background` is nil, the background is taken from the :face background, `kind-icon-default-face`, or frame background-color.
+- `kind-icon-blend-background`: If non-nil, computes a blend between a nominal background color (from either the background property of `kind-icon-default-face`, if set, or frame background color) and the foreground :face.  If `kind-icon-blend-background` is nil, the background is taken from the :face background, `kind-icon-default-face`, transparent by default.
 
 - `kind-icon-blend-frac`: The fractional blend between custom badge `:face` foreground and background (see above) color to use as a custom background for each badge.  A value of 0.0 simply replicates the background color.  Values should likely stay below 0.3 or so.
 
