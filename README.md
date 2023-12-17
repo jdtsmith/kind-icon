@@ -1,3 +1,8 @@
+<a href="https://www.gnu.org/software/emacs/"><img alt="GNU Emacs" src="https://github.com/minad/corfu/blob/screenshots/emacs.svg?raw=true"/></a>
+<a href="https://elpa.gnu.org/packages/kind-icon.html"><img alt="GNU ELPA" src="https://elpa.gnu.org/packages/kind-icon.svg"/></a>
+<a href="https://elpa.gnu.org/devel/kind-icon.html"><img alt="GNU-devel ELPA" src="https://elpa.gnu.org/devel/kind-icon.svg"/></a>
+
+
 # kind-icon — colorful icons for completion in Emacs
 This emacs package adds configurable icon or text-based completion prefixes based on the `:company-kind` property that many completion backends (such as lsp-mode and Emacs 28's elisp-mode) provide.
 
