@@ -83,6 +83,8 @@ The configuration defaults should work fine, but `kind-icon` can be customized t
 
 - `kind-icon-blend-frac`: The fractional blend between custom badge `:face` foreground and background (see above) color to use as a custom background for each badge.  A value of 0.0 simply replicates the background color.  Values should likely stay below 0.3 or so.
 
+- `kind-icon-default-style`: Default style to build `svg-lib` icons with.  Normally there is no need to configure this.  Note that `svg-lib` accepts `:background nil` to produce SVG with transparent backgrounds; this will be overridden if `kind-icon-blend-background` is non-nil.  Set `:height` to a slightly smaller value if line spacing issues occur.  You can switch the default `svg-lib` "collection" from material by adding, e.g. `:collection "octicon"` to this plist (see `svg-lib-icon-collections`).
+
 ### Colors
 
 If you don't like the default colors of the icons, you can customize the associated face, choose another pre-existing face, or substitute your own face. You can also change how the background color is displayed. 
