@@ -39,8 +39,9 @@ To enable for completion UI's with margin-formatters capability such as [corfu](
 (use-package kind-icon
   :ensure t
   :after corfu
-  :custom
-  (kind-icon-default-face 'corfu-default) ; to compute blended backgrounds correctly
+  ;:custom
+  ; (kind-icon-blend-background t)
+  ; (kind-icon-default-face 'corfu-default) ; only needed with blend-background
   :config
   (add-to-list 'corfu-margin-formatters #'kind-icon-margin-formatter))
 ```
