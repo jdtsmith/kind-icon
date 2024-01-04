@@ -96,7 +96,7 @@ Icon foreground colors are matched in the default mapping to the face colors use
 
 #### Background color
 
-By default, `kind-icon` creates a _blended_ background color that is a mix of a bit of the foreground color and the normal completion background (control the mix with `kind-icon-blend-frac`).  Note that if your completion UI uses a different background color from your normal buffer, you should configure the face it uses in `kind-icon-default-face`. If you disable `kind-icon-blend-background`, `kind-icon` will use both the foreground _and_ (if set) background from the configured `:face` for each kind, allowing you to configure arbitrary colors.
+By default, `kind-icon` uses no special background color for the icons, which means selection highlighting covers the entire row (candidate + icon).  It can optionally create _blended_ background colors for each icon, mixing of a bit of the icon's foreground color with the normal completion background (control the mix with `kind-icon-blend-frac`).  See `kind-icon-blend-background`.  Note that if you enable this, and your completion UI uses a different background color from your normal buffer, you should configure the face it uses with `kind-icon-default-face`.
 
 ### Icons 
 
