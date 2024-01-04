@@ -5,7 +5,7 @@
 ;; Author: J.D. Smith <jdtsmith@gmail.com>
 ;; URL: https://github.com/jdtsmith/kind-icon
 ;; Package-Requires: ((emacs "27.1") (svg-lib "0.2.8"))
-;; Version: 0.2.1
+;; Version: 0.2.2
 ;; Keywords: completion convenience
 
 ;; kind-icon is free software: you can redistribute it
@@ -318,7 +318,8 @@ background-color."
 			     (if (and kind-face-bg (not (eq kind-face-bg 'unspecified)))
 				 kind-face-bg)))
 		   (half (/ dfw 2))   ; integer division, may truncate
-		   (face-spec `(:weight bold :foreground ,col :background ,bg-col))
+		   (face-spec `(:weight bold :foreground ,col
+					,@(if bg-col (list :background bg-col))))
 		   (pad-right (propertize " " 'display `(space :width (,half))
 					  'face face-spec))
 		   (pad-left (propertize " " 'display `(space :width (,(- dfw half)))
@@ -334,7 +335,9 @@ background-color."
 			      ;; icon: always 2x1, half-space on each side
 			      (propertize ; pretend it's one char to allow padding
 			       (concat pad-left
-				       (propertize "*" 'display icon 'face `(:background ,bg-col))
+				       (if bg-col
+					   (propertize "*" 'display icon 'face `(:background ,bg-col))
+					 (propertize "*" 'display icon))
 				       pad-right))
 			    ;; text, 1 or 2 chars, centered with full or half space on each side
 			    (let* ((txt (truncate-string-to-width (cadr map) 2))
