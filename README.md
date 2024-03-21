@@ -163,6 +163,8 @@ A small set of packages related to `kind-icon`:
 
 If you are using the emacs-mac fork of emacs on MacOS >=10.13, you should compile with `librsvg` support, as the native SVG support using WebKit2 is slow and will impact performance. 
 
+In some situations, svg-lib renders icons which are taller than the associated font.  This can be fixed by reducing the `:height` in `kind-icon-default-style`, e.g. to 0.9 or 0.8.  
+
 ## Thanks
 
 - to @rougier for the excellent [svg-lib](https://github.com/rougier/svg-lib).
