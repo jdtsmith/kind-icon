@@ -63,6 +63,19 @@ The more generic approach of wrapping the `completion-in-region-function` would 
 
 for whichever `completion-ui` you are using.  Note that for this method to work, your completion UI must support the Emacs 28 `affixation-function` property. 
 
+### Using with company
+
+[Company](https://github.com/company-mode/company-mode) has its own distinct margin formatter system, but `kind-icon` can easily be adapted to it as follows:
+
+```elisp
+(defvar my-company-kind-icon-formatter
+  (let ((kind-func (lambda (cand) (company-call-backend 'kind cand))))
+    (kind-icon-margin-formatter `((company-kind . ,kind-func)))))
+(defun my-company-kind-icon-margin (cand _selected)
+  (funcall my-company-kind-icon-formatter cand))
+(setq company-format-margin-function #'my-company-kind-icon-margin)
+```
+
 ## Configuration
 
 The configuration defaults should work fine, but `kind-icon` can be customized to change the icons and colors, preference of icons vs. short-text (or mixed) prefixes, and more. See [the wiki](https://github.com/jdtsmith/kind-icon/wiki) for configuration ideas including alternative icon sets.
