@@ -24,6 +24,10 @@ With blended icon backgrounds:
 
   <img width="740" alt="kind-icon text-only" src="https://github.com/jdtsmith/kind-icon/assets/93749/2001a291-f21a-421c-b9b6-e474f3132177">
 
+### With Company:
+
+   <img width="298" alt="image" src="https://github.com/user-attachments/assets/7773e519-1d6b-4a7a-aea4-b254f840c19d">
+
 
 ## Installation 
 
