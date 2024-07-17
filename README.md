@@ -72,12 +72,15 @@ for whichever `completion-ui` you are using.  Note that for this method to work,
 [Company](https://github.com/company-mode/company-mode) has its own distinct margin formatter system, but `kind-icon` can easily be adapted to it as follows:
 
 ```elisp
-(defvar my-company-kind-icon-formatter
-  (let ((kind-func (lambda (cand) (company-call-backend 'kind cand))))
-    (kind-icon-margin-formatter `((company-kind . ,kind-func)))))
-(defun my-company-kind-icon-margin (cand _selected)
-  (funcall my-company-kind-icon-formatter cand))
-(setq company-format-margin-function #'my-company-kind-icon-margin)
+(use-package kind-icon
+  :ensure t
+  :after company
+  :config
+  (let* ((kind-func (lambda (cand) (company-call-backend 'kind cand)))
+         (formatter (kind-icon-margin-formatter `((company-kind . ,kind-func)))))
+    (defun my-company-kind-icon-margin (cand _selected)
+      (funcall formatter cand))
+    (setq company-format-margin-function #'my-company-kind-icon-margin)))
 ```
 
 ## Configuration
