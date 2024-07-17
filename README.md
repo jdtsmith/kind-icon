@@ -4,15 +4,15 @@
 
 
 # kind-icon — colorful icons for completion in Emacs
-This emacs package adds configurable icon or text-based completion prefixes based on the `:company-kind` property that many completion backends (such as lsp-mode and Emacs 28's elisp-mode) provide.
+This emacs package adds configurable icon or text-based completion prefixes based on the `:company-kind` property that many completion backends (such as lsp-mode, eglot, and Emacs' elisp-mode) provide.
 
 ## Examples
 
-A few examples of `kind-icon` in action with corfu (and popupinfo).  
+A few examples of `kind-icon` in action.
 
 ### SVG icons
 
-With the new default transparent icon background. 
+With the new default transparent icon background, with `corfu` (and `corfu-popupinfo`).  
 
   <img width="675" alt="kind-icon SVG1" src="https://github.com/jdtsmith/kind-icon/assets/93749/4681a6f1-ba12-4965-954a-6b5edc6b168d">
 
