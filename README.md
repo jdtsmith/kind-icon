@@ -69,7 +69,7 @@ for whichever `completion-ui` you are using.  Note that for this method to work,
 
 ### Using with company
 
-[Company](https://github.com/company-mode/company-mode) has its own distinct margin formatter system, but `kind-icon` can easily be adapted to it as follows:
+[Company](https://github.com/company-mode/company-mode) has its own distinct margin formatter system, but `kind-icon` can easily be adapted to it with the following setup:
 
 ```elisp
 (use-package kind-icon
@@ -82,6 +82,9 @@ for whichever `completion-ui` you are using.  Note that for this method to work,
       (funcall formatter cand))
     (setq company-format-margin-function #'my-company-kind-icon-margin)))
 ```
+
+>[!IMPORTANT]
+> The company config above requires you to use lexical binding.  Simply add `;;; -*- lexical-binding: t -*-` at the top of your `init.el`.
 
 ## Configuration
 
